@@ -19,6 +19,9 @@
                             <a href="<?= BASE_URL ?>usuario/meus-dados"><i class="fa fa-list-ol"></i> Meus dados</a>
                         </li>
                         <li>
+                            <a href="<?= BASE_URL ?>usuario/enderecos"><i class="fa fa-list-ol"></i> Meus endereços</a>
+                        </li>
+                        <li>
                             <a href="<?= BASE_URL ?>usuario/logout"><i class="fa fa-sign-out"></i> Sair</a>
                         </li>
                     </ul>
@@ -95,10 +98,16 @@
                     <nav class="header__menu">
                         <ul>
                             <li class="<?= ($menuDinamic == "/dashboard" ? "active" : ""); ?>">
-                                <a href="<?= BASE_URL ?>usuario/dashboard">Home</a>
+                                <a href="<?= BASE_URL ?>usuario/dashboard"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
                             </li>
-                            <li class="<?= ($menuDinamic == "/minhas-encomendas" ? "active" : ""); ?>">
-                                <a href="<?= BASE_URL ?>usuario/minhas-encomendas">Minhas encomendas</a>
+                            <li class="<?= ($menuDinamic == "/servicos" ? "active" : ""); ?>">
+                                <a href="<?= BASE_URL ?>usuario/servicos"><i class="fas fa-th" aria-hidden="true"></i> Serviços</a>
+                            </li>
+                            <li class="<?= ($menuDinamic == "/historico" ? "active" : ""); ?>">
+                                <a href="<?= BASE_URL ?>usuario/historico"><i class="fas fa-list-ul" aria-hidden="true"></i> Histórico</a>
+                            </li>
+                            <li class="<?= ($menuDinamic == "/rastreio" ? "active" : ""); ?>">
+                                <a href="<?= BASE_URL ?>usuario/historico"><i class="fas fa-search" aria-hidden="true"></i> Rastrear</a>
                             </li>
                         </ul>
                     </nav>
@@ -113,7 +122,10 @@
                                 </a>
                                 <ul class="header__menu__dropdown">
                                     <li>
-                                        <a href="<?= BASE_URL ?>usuario/meus-dados"><i class="fa fa-list-ol"></i> Meus dados</a>
+                                        <a href="<?= BASE_URL ?>usuario/meus-dados"><i class="fa fa-list-ol"></i> Conta</a>
+                                    </li>
+                                    <li>
+                                        <a href="<?= BASE_URL ?>usuario/enderecos"><i class="fa fa-map-marker" aria-hidden="true"></i> Meus endereços</a>
                                     </li>
                                     <li>
                                         <a href="<?= BASE_URL ?>usuario/logout"><i class="fa fa-sign-out"></i> Sair</a>
@@ -187,6 +199,26 @@
         </div>
     </header>
     <!-- Header Section End -->
+
+
+    <div class="menu-mob">
+        <a href="<?= BASE_URL ?>" class="nav_link <?= ($menuDinamic == "/dashboard" ? "nav_link-active" : ""); ?>">
+            <i class="fas fa-home" aria-hidden="true"></i>
+            <span class="nav__text">Início</span>
+        </a>
+        <a href="<?= BASE_URL ?>usuario/servicos" class="nav_link <?= ($menuDinamic == "/servicos" ? "nav_link-active" : ""); ?>">
+            <i class="fas fa-th" aria-hidden="true"></i>
+            <span class="nav_text">Serviços</span>
+        </a>
+        <a href="<?= BASE_URL ?>usuario/historico" class="nav_link <?= ($menuDinamic == "/historico" ? "nav_link-active" : ""); ?>">
+            <i class="fas fa-list-ul" aria-hidden="true"></i>
+            <span class="nav_text">Histórico</span>
+        </a>
+        <a href="<?= BASE_URL ?>usuario/meus-dados" class="nav_link <?= ($menuDinamic == "/meus-dados" ? "nav_link-active" : ""); ?>">
+            <i class="fas fa-user" aria-hidden="true"></i>
+            <span class="nav_text">Conta</span>
+        </a>
+    </div>
 
     <?php 
         

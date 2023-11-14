@@ -171,13 +171,14 @@ ol {
 
 .site-btn {
 	font-size: 14px;
-	color: #ffffff;
+	color: #ffffff ;
 	font-weight: 800;
 	text-transform: uppercase;
 	display: inline-block;
 	padding: 13px 30px 12px;
 	background: #0098fc;
 	border: none;
+	cursor: pointer;
 	transition: all 0.3s;
 }
 

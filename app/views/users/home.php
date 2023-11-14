@@ -7,12 +7,12 @@
                   <div class="card-body p-0">
                      <div class="row">
                         <div class="col-lg-12">
-                           <div class="p-5 mb-4 ">
+                           <div class="p-3 mb-4 ">
                               <div class="d-sm-flex align-items-center justify-content-between">
                                  <h1 class="h3 mb-4 text-gray-800">Oi, <?= $_SESSION['first_name']; ?>! O que deseja? 😊</h1>
                               </div>
                               <div class="btn-startin-container mb-5">
-                                  <a href="<?= BASE_URL ?>usuario/solicitar" class="site-btn site-btn-secondary">
+                                  <a href="<?= BASE_URL ?>usuario/servicos" class="site-btn site-btn-secondary">
                                       <span><i class="fa fa-truck"></i> Solicitar serviço</span>
                                   </a>
                                   <button class="site-btn site-btn-secondary" type="button" data-toggle="collapse" data-target="#collapseRastreio" aria-expanded="false">
@@ -51,24 +51,5 @@
               window.location.href = "<?= BASE_URL; ?>usuario/rastreio/" + encodeURIComponent(deliveryId);
           });
       </script>
-
-      <?php 
-         //Gerador de códigos de rastreio
-         function generateRandomString($length = 15)
-         {
-             $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-             $randomString = '';
-
-             for ($i = 0; $i < $length; $i++) {
-                 $randomString .= $characters[rand(0, strlen($characters) - 1)];
-             }
-
-             return $randomString;
-         }
-
-         $randomString = generateRandomString();
-         echo "Código gerado: " . $randomString."AI";
-
-      ?>
 
 <?php include_once __DIR__ . '/../includes/footer.php'; ?>

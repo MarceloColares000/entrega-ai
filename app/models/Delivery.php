@@ -5,6 +5,7 @@ namespace App\Models;
 class Delivery
 {
     private ?int $id = null;
+    private string $delivery_id;
     private ?int $user_id = null;
     private ?int $driver_id = null;
     private ?string $sender_name = null;
@@ -17,6 +18,8 @@ class Delivery
     private ?string $recipient_house_number = null;
     private ?int $vehicle_type_id = null;
     private ?int $delivery_status_id = null;
+    private string $total_km;
+    private string $total_price;
     private ?string $delivery_details = null;
     private ?string $delivery_date = null;
     private ?string $created_at = null;
@@ -32,6 +35,16 @@ class Delivery
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    public function getDelivery_id()
+    {
+        return $this->delivery_id;
+    }
+
+    public function setDelivery_id($delivery_id)
+    {
+        $this->delivery_id = $delivery_id;
     }
 
     public function getUser_id()
@@ -152,6 +165,26 @@ class Delivery
     public function setDelivery_status_id($delivery_status_id)
     {
         $this->delivery_status_id = $delivery_status_id;
+    }
+
+    public function getTotal_km()
+    {
+        return $this->total_km;
+    }
+
+    public function setTotal_km($total_km)
+    {
+        $this->total_km = $total_km;
+    }
+
+    public function getTotal_price()
+    {
+        return $this->total_price;
+    }
+
+    public function setTotal_price($total_price)
+    {
+        $this->total_price = $total_price;
     }
 
     public function getDelivery_details()

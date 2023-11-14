@@ -14,6 +14,8 @@ use App\Functions\Dispatcher;
 //Adicione os controllers
 use App\Controllers\HomeController;
 use App\Controllers\UserController;
+use App\Controllers\ServiceController;
+use App\Controllers\AddressController;
 use App\Controllers\DriverController;
 use App\Controllers\ErrorController;
 
@@ -30,23 +32,43 @@ $dispatcher->addRoute('politica-de-privacidade', HomeController::class, 'renderP
 $dispatcher->addRoute('contato', HomeController::class, 'renderContact');
 
 //Rotas de usuário
-$dispatcher->addRoute('usuario/cadastrar', UserController::class, 'renderRegister');
-$dispatcher->addRoute('usuario/signup', UserController::class, 'signupUser');
-$dispatcher->addRoute('usuario/login', UserController::class, 'renderLogin');
-$dispatcher->addRoute('usuario/signin', UserController::class, 'signinUser');
-$dispatcher->addRoute('usuario/logout', UserController::class, 'logoutUser');
-$dispatcher->addRoute('usuario/dashboard', UserController::class, 'renderHome');
-$dispatcher->addRoute('usuario/meus-dados', UserController::class, 'renderMyProfile');
-$dispatcher->addRoute('usuario/update', UserController::class, 'updateUser');
-$dispatcher->addRoute('usuario/delete', UserController::class, 'deleteUser');
+
+$userRoutesGroup = ['usuario'];
+
+foreach ($userRoutesGroup as $userRoute) {
+    
+    $dispatcher->addRoute($userRoute . '/cadastrar', UserController::class, 'renderRegister');
+    $dispatcher->addRoute($userRoute . '/signup', UserController::class, 'signupUser');
+    $dispatcher->addRoute($userRoute . '/login', UserController::class, 'renderLogin');
+    $dispatcher->addRoute($userRoute . '/signin', UserController::class, 'signinUser');
+    $dispatcher->addRoute($userRoute . '/logout', UserController::class, 'logoutUser');
+    $dispatcher->addRoute($userRoute . '/dashboard', UserController::class, 'renderHome');
+    $dispatcher->addRoute($userRoute . '/meus-dados', UserController::class, 'renderMyProfile');
+    $dispatcher->addRoute($userRoute . '/update', UserController::class, 'updateUser');
+    $dispatcher->addRoute($userRoute . '/delete', UserController::class, 'deleteUser');
+    
+    // Rotas de serviço
+    $dispatcher->addRoute($userRoute . '/enderecos', AddressController::class, 'renderAdresses');
+    $dispatcher->addRoute($userRoute . '/servicos', ServiceController::class, 'renderService');
+    $dispatcher->addRoute($userRoute . '/historico', ServiceController::class, 'renderHistoric');
+
+}
+
 
 //Rotas de motorista
-$dispatcher->addRoute('motorista/cadastrar', DriverController::class, 'renderRegister');
-$dispatcher->addRoute('motorista/signup', DriverController::class, 'signupDriver');
-$dispatcher->addRoute('motorista/login', DriverController::class, 'renderLogin');
-$dispatcher->addRoute('motorista/signin', DriverController::class, 'signinDriver');
-$dispatcher->addRoute('motorista/logout', DriverController::class, 'logoutDriver');
-$dispatcher->addRoute('motorista/dashboard', DriverController::class, 'renderHome');
+
+$driverRoutesGroup = ['motorista'];
+
+foreach ($driverRoutesGroup as $driverRoute) {
+
+    $dispatcher->addRoute($driverRoute . '/cadastrar', DriverController::class, 'renderRegister');
+    $dispatcher->addRoute($driverRoute . '/signup', DriverController::class, 'signupDriver');
+    $dispatcher->addRoute($driverRoute . '/login', DriverController::class, 'renderLogin');
+    $dispatcher->addRoute($driverRoute . '/signin', DriverController::class, 'signinDriver');
+    $dispatcher->addRoute($driverRoute . '/logout', DriverController::class, 'logoutDriver');
+    $dispatcher->addRoute($driverRoute . '/dashboard', DriverController::class, 'renderHome');
+
+}
 
 
 //Você pode passar variáveis ou valores pela URL usando {}

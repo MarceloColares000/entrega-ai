@@ -8,7 +8,7 @@ use App\Models\Delivery;
 class DeliveryDAO extends GenericDAO
 {
     // Define o nome da tabela no banco de dados que esta classe irá manipular
-    protected string $table = "vehicle_types";
+    protected string $table = "deliveries";
 
     // Construtor da classe
     public function __construct()
