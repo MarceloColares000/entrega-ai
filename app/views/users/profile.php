@@ -1,50 +1,54 @@
 <?php include_once __DIR__ . '/../includes/menu.php'; ?>
-
-    <div class="container">
-         <div class="row justify-content-center">
-            <div class="col-xl-12 col-lg-12 col-md-9">
-               <div class="card o-hidden border-0 my-5">
-                  <div class="card-body p-0">
-                     <div class="row">
-                        <div class="col-lg-12">
-                           <div class="p-3 mb-4 ">
-                              <div class="d-sm-flex align-items-center justify-content-between">
-                                 <h1 class="h3 mb-4 text-gray-800">Oi, <?= $_SESSION['first_name']; ?>! 😊</h1>
-                              </div>
-                              <?= SessionMessage() ?>
-                              <!-- Content Row -->
-                              <form class="user" action="<?= BASE_URL ?>usuario/update" method="post" id="user-form-edit">
-                               <div class="form-group">
-                                  <input type="text" class="form-control form-control-user" name="name" id="name" placeholder="Seu nome" value="<?= $_SESSION['user_name'] ?>" required>
-                               </div>
-                               <div class="form-group row">
-                                  <div class="col-sm-6 mb-3 mb-sm-0">
-                                     <input type="text" class="form-control form-control-user" onkeydown="javascript: fMasc(this, mTel);" maxlength="12" name="phone" id="phone" placeholder="Telefone (XX) XXXXX-XXXX" value="<?= $_SESSION['user_phone'] ?>" required >
-                                  </div>
-                                  <div class="col-sm-6">
-                                     <input type="date" max="9999-12-31" class="form-control form-control-user" name="birthdate" id="birthdate" placeholder="Data de nascimento" value="<?= $_SESSION['user_birthdate'] ?>" required>
-                                  </div>
-                               </div>
-                               <div class="form-group">
-                                  <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Seu email" value="<?= $_SESSION['user_email'] ?>" disabled required>
-                               </div>
-                               <input type="hidden" name="user_id" name="user_id" value="<?= $_SESSION['user_id'] ?>">
-                               <button type="submit" class="btn btn-primary btn-user btn-block"><i class="fa fa-save"></i>  Atualizar</button>
-                            </form>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
+      
+      
+      <div class="container">
+         <div class="col-lg-12">
+            <div class="p-3 mb-4 mt-4">
+               <div class="d-sm-flex align-items-center justify-content-between">
+                  <h1 class="h3 mb-4 text-gray-800">Oi, <?= $_SESSION['first_name']; ?>! 😊</h1>
                </div>
             </div>
-            <form class="user" action="<?= BASE_URL ?>usuario/delete" method="post" onsubmit="return confirm('Você deseja realmente excluir sua conta?');">
-               <input type="hidden" name="user_id" name="user_id" value="<?= $_SESSION['user_id'] ?>">
-               <button type="submit" class="btn btn-danger btn-user btn-block"><i class="fa fa-trash"></i> Apagar minha conta</button>
-            </form>
+         </div>
+         <div class="view-account">
+            <section class="module">
+               <div class="module-inner">
+                  <?php include_once __DIR__ . '/../includes/sideMenu.php'; ?>
+                  <div class="content-panel">
+                     <h2 class="title">Meus dados</h2>
+                     <div class="billing">
+                        <form action="<?= BASE_URL ?>usuario/update" method="post" id="user-form-edit">
+                           <div class="form-group">
+                              <label class="control-label" for="name">Nome completo:</label>
+                              <input type="text" class="styles__Field-tg3uj4-1 gXNzQk" name="name" id="name" placeholder="Seu nome" value="<?= $_SESSION['user_name'] ?>" required>
+                           </div>
+                           <div class="form-group row">
+                              <div class="col-sm-6 mb-3 mb-sm-0">
+                                 <label class="control-label" for="phone">Telefone:</label>
+                                 <input type="text" class="styles__Field-tg3uj4-1 gXNzQk" onkeydown="javascript: fMasc(this, mTel);" maxlength="12" name="phone" id="phone" placeholder="Telefone (XX) XXXXX-XXXX" value="<?= $_SESSION['user_phone'] ?>" required >
+                              </div>
+                              <div class="col-sm-6">
+                                 <label class="control-label" for="birthdate">Data de nascimento:</label>
+                                 <input type="date" max="9999-12-31" class="styles__Field-tg3uj4-1 gXNzQk" name="birthdate" id="birthdate" placeholder="Data de nascimento" value="<?= $_SESSION['user_birthdate'] ?>" required>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="control-label" for="email">Email:</label>
+                              <input type="email" class="styles__Field-tg3uj4-1 gXNzQk" name="email" id="email" placeholder="Seu email" value="<?= $_SESSION['user_email'] ?>" disabled required>
+                           </div>
+                           <input type="hidden" name="user_id" name="user_id" value="<?= $_SESSION['user_id'] ?>">
+                           <button type="submit" class="btn site-btn"><i class="fa fa-save"></i>  Atualizar</button>
+                        </form>
+                     </div>
+
+                     <form class="user" action="<?= BASE_URL ?>usuario/delete" method="post" onsubmit="return confirm('Você deseja realmente excluir sua conta?');">
+                        <input type="hidden" name="user_id" name="user_id" value="<?= $_SESSION['user_id'] ?>">
+                        <button type="submit" class="btn btn-danger btn-user"><i class="fa fa-trash"></i> Apagar minha conta</button>
+                     </form>
+                  </div>
+               </div>
+            </section>
          </div>
       </div>
-
-
 
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

@@ -108,29 +108,16 @@ ol {
 }
 
 
-.section-title-right {
+.section-title-left {
 	margin-bottom: 50px;
-	text-align: right;
+	text-align: left;
 }
 
-.section-title-right h2 {
+.section-title-left h2 {
 	color: #1c1c1c;
-	font-weight: 700;
+	font-weight: 400;
 	position: relative;
 }
-
-.section-title-right h2:after {
-	position: absolute;
-	left: 0;
-	bottom: -15px;
-	right: 0;
-	height: 4px;
-	width: 80px;
-	background: #0098fc;
-	content: "";
-	margin: 0 auto;
-}
-
 
 .set-bg {
 	background-repeat: no-repeat;

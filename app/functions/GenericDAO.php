@@ -172,6 +172,11 @@ class GenericDAO
             throw new \InvalidArgumentException("Nenhum nome de coluna válido fornecido.");
         }
 
+        // Verifica se há dados válidos antes de prosseguir com a inserção
+        if (empty(array_filter($filteredData))) {
+            throw new \InvalidArgumentException("Nenhum dado válido fornecido para inserção.");
+        }
+
         // Gerar placeholders para colunas válidas
         $columns = implode(", ", array_keys($filteredData));
         $placeholders = ":" . implode(", :", array_keys($filteredData));
@@ -184,6 +189,7 @@ class GenericDAO
         // Retorna o último ID inserido
         return Database::getConnection()->lastInsertId();
     }
+
 
     // Atualiza registro
     public function update(array $data, $id)

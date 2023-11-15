@@ -43,4 +43,83 @@ class AddressController
         
     }
 
+    public function addAddress()
+    {   
+        
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            Helpers::redirect('usuario/enderecos');
+        }
+
+        // Verifica se os campos obrigatórios estão preenchidos
+        $requiredFields = ['description', 'latitude', 'longitude', 'number'];
+
+        if (!Helpers::checkEmptyFields($requiredFields)) {
+            $_SESSION['msg'] = Message::error("Preencha todos os campos!");
+            Helpers::redirect('usuario/enderecos');
+        }
+
+        $user_id = (int) $_SESSION['user_id'];
+
+        // Instância e atribuição dos atributos
+        $address = new Address();
+        $address->setUser_Id($user_id);
+        $address->setDescription($_POST['description']);
+        $address->setLatitude($_POST['latitude']);
+        $address->setLongitude($_POST['longitude']);
+        $address->setAddressDetails($_POST['addressDetailsHidden']);
+        $address->setNumber($_POST['number']);
+            
+        $addressDAO = new AddressDAO();
+
+        // Tenta inserir o usuário no banco de dados
+        $insertedAddressId = $addressDAO->insert($address->toArrayGet());
+
+        if ($insertedAddressId > 0) {
+
+            $_SESSION['msg'] = Message::success("Endereço cadastrado com sucesso!");
+            Helpers::redirect('usuario/enderecos');
+
+        } else {
+
+            $_SESSION['msg'] = Message::error("Erro ao cadastrar o endereço. Tente novamente!");
+            Helpers::redirect('usuario/enderecos');
+
+        }
+        
+    }
+
+    // Deletar o usuário
+    public function deleteAddress()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            Helpers::redirect('');
+        }
+
+        // Verifica se existe o ID e se ele é um inteiro
+        $id = isset($_POST['id']) ? (int)$_POST['id'] : null;
+
+        if ($id) {
+            
+            $addressDAO = new AddressDAO();
+            $address = $addressDAO->getById($id);
+
+            if ($address) {
+            
+                $deleted = $addressDAO->delete($id);
+
+                $_SESSION['msg'] = Message::success("Endereço excluído com sucesso!");
+                Helpers::redirect('usuario/enderecos');
+
+            } else {
+                $_SESSION['msg'] = Message::warning("Erro ao tentar excluir seu endereço. Tente novamente.");
+                Helpers::redirect('usuario/enderecos');
+            }
+        
+        } else {
+            $_SESSION['msg'] = Message::error("Erro ao tentar excluir seu endereço. Operação não permitida.");
+            Helpers::redirect('usuario/enderecos');
+        }
+
+    }
+
 }

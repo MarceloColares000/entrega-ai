@@ -106,8 +106,8 @@
                             <li class="<?= ($menuDinamic == "/historico" ? "active" : ""); ?>">
                                 <a href="<?= BASE_URL ?>usuario/historico"><i class="fas fa-list-ul" aria-hidden="true"></i> Histórico</a>
                             </li>
-                            <li class="<?= ($menuDinamic == "/rastreio" ? "active" : ""); ?>">
-                                <a href="<?= BASE_URL ?>usuario/historico"><i class="fas fa-search" aria-hidden="true"></i> Rastrear</a>
+                            <li class="<?= ($menuDinamic == "/rastrear" ? "active" : ""); ?>">
+                                <a href="<?= BASE_URL ?>usuario/rastrear"><i class="fas fa-search" aria-hidden="true"></i> Rastrear</a>
                             </li>
                         </ul>
                     </nav>
@@ -213,6 +213,10 @@
         <a href="<?= BASE_URL ?>usuario/historico" class="nav_link <?= ($menuDinamic == "/historico" ? "nav_link-active" : ""); ?>">
             <i class="fas fa-list-ul" aria-hidden="true"></i>
             <span class="nav_text">Histórico</span>
+        </a>
+        <a href="<?= BASE_URL ?>usuario/rastrear" class="nav_link <?= ($menuDinamic == "/rastrear" ? "nav_link-active" : ""); ?>">
+            <i class="fas fa-search" aria-hidden="true"></i>
+            <span class="nav_text">Rastrear</span>
         </a>
         <a href="<?= BASE_URL ?>usuario/meus-dados" class="nav_link <?= ($menuDinamic == "/meus-dados" ? "nav_link-active" : ""); ?>">
             <i class="fas fa-user" aria-hidden="true"></i>

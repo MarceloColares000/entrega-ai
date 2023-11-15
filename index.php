@@ -48,9 +48,13 @@ foreach ($userRoutesGroup as $userRoute) {
     $dispatcher->addRoute($userRoute . '/delete', UserController::class, 'deleteUser');
     
     // Rotas de serviço
-    $dispatcher->addRoute($userRoute . '/enderecos', AddressController::class, 'renderAdresses');
     $dispatcher->addRoute($userRoute . '/servicos', ServiceController::class, 'renderService');
     $dispatcher->addRoute($userRoute . '/historico', ServiceController::class, 'renderHistoric');
+    
+    // Rotas de endereço
+    $dispatcher->addRoute($userRoute . '/enderecos', AddressController::class, 'renderAdresses');
+    $dispatcher->addRoute($userRoute . '/enderecos/add', AddressController::class, 'addAddress');
+    $dispatcher->addRoute($userRoute . '/enderecos/delete', AddressController::class, 'deleteAddress');
 
 }
 

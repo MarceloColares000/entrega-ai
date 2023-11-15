@@ -17,7 +17,7 @@
                                 
                                  <div class="text-center">
                                     <img src="<?= IMG ?>/no_data.svg" style="width: 15%;" class="img-fluid ">
-                                    <p class="mt-4 mb-4">Você ainda não solicitou nenhum pedido!</p>
+                                    <p class="mt-4 mb-4">Você ainda não solicitou nenhum serviço!</p>
                                  </div>
                                  
                                  <?php 
@@ -26,9 +26,9 @@
 
                                  foreach($deliveries as $delivery){ ?>
 
-                                    <div class="pedido_area col-md-12">
+                                    <div class="delivery-area col-md-12">
                                        <a href="#" data-toggle="modal" data-target="#<?= $delivery->getDelivery_id() ?>" class="text-decoration-none text-dark">
-                                          <div class="espaco_area shadow-sm">
+                                          <div class="space-area shadow-sm">
                                              <div class="d-flex align-items-center mb-3">
                                                 
                                                 <p class="btn-warning py-1 px-2 mb-0 text-center">
@@ -61,12 +61,12 @@
                                                          <div class="col-lg-12 col-md-12 col-sm-12">
                                                              <div class="osahan-status">
                                                                  <!-- Data da entrega -->
-                                                                 <div class="espaco_area status-order border-bottom d-flex align-items-center">
+                                                                 <div class="space-area status-order border-bottom d-flex align-items-center">
                                                                      <p class="m-0"><i class="far fa-clock"></i> <?= date('d/m/Y, H:i', strtotime($delivery->getCreated_at())); ?></p>
                                                                  </div>
 
                                                                  <!-- Status do Pedido -->
-                                                                 <div class="espaco_area border-bottom">
+                                                                 <div class="space-area border-bottom">
                                                                      <h6 class="font-weight-bold">Status do Pedido:</h6>
                                                                      <div class="tracking-wrap">
                                                                          <div class="my-1 step"><span class="text"></span></div>
@@ -74,31 +74,31 @@
                                                                  </div>
 
                                                                  <!-- Observações -->
-                                                                 <div class="espaco_area border-bottom">
+                                                                 <div class="space-area border-bottom">
                                                                      <h6 class="font-weight-bold">Suas observações:</h6>
                                                                      <p class="m-0"><?= ($delivery->getDelivery_details() == '' ? "Não há observações." : $delivery->getDelivery_details()) ?></p>
                                                                  </div>
 
                                                                  <!-- Local de entrega -->
-                                                                 <div class="espaco_area border-bottom">
+                                                                 <div class="space-area border-bottom">
                                                                      <h6 class="font-weight-bold">Local de entrega:</h6>
                                                                      <p class="m-0 text-muted">Retirar no local</p>
                                                                  </div>
 
                                                                  <!-- Forma de pagamento -->
-                                                                 <div class="espaco_area border-bottom">
+                                                                 <div class="space-area border-bottom">
                                                                      <h6 class="font-weight-bold">Forma de pagamento:</h6>
                                                                      <p class="m-0"><!-- Adicione a forma de pagamento aqui --></p>
                                                                  </div>
 
                                                                  <!-- Data de entrega -->
-                                                                 <div class="espaco_area border-bottom">
+                                                                 <div class="space-area border-bottom">
                                                                      <h6 class="font-weight-bold"><i class="fa fa-truck" aria-hidden="true"></i> Entregue em:</h6>
                                                                      <p class="text-muted m-0"><?= date('d/m/Y, H:i', strtotime($delivery->getCreated_at())); ?></p>
                                                                  </div>
 
                                                                  <!-- Total -->
-                                                                 <div class="espaco_area">
+                                                                 <div class="space-area">
                                                                      <div class="d-flex align-items-center mb-2">
                                                                          <h6 class="font-weight-bold mb-1">Total:</h6>
                                                                          <h6 class="font-weight-bold ml-auto mb-1">R$ <?= number_format($delivery->getTotal_price(), 2, ',', '.'); ?></h6>
@@ -119,36 +119,7 @@
                                  </div>
 
                                  <?php }} ?>
-                                 
-                              <style type="text/css">
-                                 .pedido_area {
-    border-radius: 5px;
-    margin-bottom: 5px;
-}
-.text-decoration-none {
-    text-decoration: none!important;
-}
-.text-dark {
-    color: #5a5c69!important;
-}
-
-.espaco_area {
-    padding: 1rem!important;
-}
-.ml-auto, .mx-auto {
-    margin-left: auto!important;
-}
-.text-muted {
-    color: #6c757d!important;
-}
-
-.espaco_area {
-    padding: 1rem!important;
-}
-.font-weight-bold {
-    font-weight: 700!important;
-}
-                              </style>
+     
                               </div>
                            </div>
                         </div>

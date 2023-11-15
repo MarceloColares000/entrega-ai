@@ -48,7 +48,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiaVengxhyQnPmqPQERZmKBK0GVHoVsvE&callback=initMap" async defer></script>
     <!-- Font Awesome -->
     <script src="<?= JS ?>/fontAwesome.js"></script>
     <script src="https://kit.fontawesome.com/c2eaecad4c.js"></script>

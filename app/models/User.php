@@ -18,17 +18,25 @@ class User
     private ?string $updated_at = null;
 
 
-    public function toArrayGet() {
-        // Retorna um array associativo com os dados do usuário
-        return [
+    public function toArrayGet()
+    {
+        $data = [
             'name' => $this->getName(),
             'email' => $this->getEmail(),
             'phone' => $this->getPhone(),
             'cpf' => $this->getCpf(),
             'birthdate' => $this->getBirthdate(),
-            'password' => $this->getPassword(),
+            'password' => $this->getPassword(), // Incluído se não estiver vazio
         ];
+
+        // Filtra os campos que não estão vazios
+        $filteredData = array_filter($data, function ($value) {
+            return $value !== '' && $value !== null;
+        });
+
+        return $filteredData;
     }
+
     
     // Métodos getters e setters para cada propriedade
     public function getId()

@@ -6,11 +6,26 @@ class Address
 {
     private ?int $id = null;
     private int $user_id;
+    private string $description;
     private string $latitude;
     private string $longitude;    
+    private string $addressDetails;    
+    private int $number;    
     private int $is_main;    
     private ?string $created_at = null;
     private ?string $updated_at = null;
+
+    public function toArrayGet() {
+        // Retorna um array associativo com os dados do usuário
+        return [
+            'user_id' => $this->getUser_Id($user_id),
+            'description' => $this->getDescription(),
+            'latitude' => $this->getLatitude(),
+            'longitude' => $this->getLongitude(),
+            'addressDetails' => $this->getAddressDetails(),
+            'number' => $this->getNumber(),
+        ];
+    }
 
     // Métodos getters e setters para cada propriedade
 
@@ -29,16 +44,25 @@ class Address
         return $this->user_id;
     }
 
-    public function setUser_Id()
+    public function setUser_Id($user_id) 
     {
         $this->user_id = $user_id;
+    }
+
+    public function getDescription(){
+        return $this->description;
+    }
+
+    public function setDescription($description) 
+    {
+        $this->description = $description ?? '';
     }
 
     public function getLatitude(){
         return $this->latitude;
     }
 
-    public function setLatitude(){
+    public function setLatitude($latitude){
         return $this->latitude = $latitude;
     }
 
@@ -46,9 +70,27 @@ class Address
         return $this->longitude;
     }
 
-    public function setLongitude(){
+    public function setLongitude($longitude){
         return $this->longitude = $longitude;
+    } 
+
+    public function getAddressDetails(){
+        return $this->addressDetails;
+    }
+
+    public function setAddressDetails($addressDetails){
+        return $this->addressDetails = $addressDetails;
     }    
+
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    public function setNumber($number)
+    {
+        $this->number = $number;
+    }
 
     public function getCreated_at()
     {
