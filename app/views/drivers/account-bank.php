@@ -33,7 +33,7 @@
                                          <button class="btn btn-sm btn-primary mr-2" data-toggle="modal" data-target="#editAccountModal<?= $account->getId(); ?>" title="Editar">
                                          <i class="fa fa-edit" aria-hidden="true"></i>
                                          </button>
-                                         <form action="<?= BASE_URL ?>usuario/cartoes/delete" method="post" onsubmit="return confirm('Você tem certeza que quer apagar esse cartão?')" class="d-inline">
+                                         <form action="<?= BASE_URL ?>motorista/conta-bancaria/delete" method="post" onsubmit="return confirm('Você tem certeza que quer apagar essa conta?')" class="d-inline">
                                             <input type="hidden" name="id" id="id" value="<?= $account->getId(); ?>">
                                             <button type="submit" class="btn btn-sm btn-danger" title="Apagar">
                                             <i class="fa fa-trash" aria-hidden="true"></i>

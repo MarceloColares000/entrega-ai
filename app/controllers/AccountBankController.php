@@ -103,7 +103,7 @@ class AccountBankController
         $accountBankDAO = new AccountBankDAO();
 
         // Verifica se a conta pertence ao usuario
-        $isDriverAccount = true;
+        $isDriverAccount = $accountBankDAO->getByConditions("driver_id = $driver_id AND id = $id");
 
         if($isDriverAccount){
 
@@ -125,7 +125,7 @@ class AccountBankController
     
     }
 
-    // Deletar o cartão
+    // Deletar a conta bancária
     public function deleteAccountBank()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -134,27 +134,27 @@ class AccountBankController
 
         // Verifica se existe o ID e se ele é um inteiro
         $id = isset($_POST['id']) ? (int)$_POST['id'] : null;
-        $user_id = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : null;
+        $driver_id = isset($_SESSION['driver_id']) ? (int)$_SESSION['driver_id'] : null;
 
         if ($id) {
             
-            $cardDAO = new CardDAO();
-            $card = $cardDAO->getById($id);
+            $accountBankDAO = new AccountBankDAO();
+            $card = $accountBankDAO->getById($id);
 
             // Verifica se o cartão pertence ao usuario
-            $isUserCard = $cardDAO->getByConditions("user_id = $user_id AND id = $id");
+            $isUserAccount = $accountBankDAO->getByConditions("driver_id = $driver_id AND id = $id");
 
-            if($isUserCard){
+            if($isUserAccount){
 
                 if ($card) {
                 
-                    $deleted = $cardDAO->delete($id);
+                    $deleted = $accountBankDAO->delete($id);
 
-                    $_SESSION['msg'] = Message::success("Cartão excluído com sucesso!");
+                    $_SESSION['msg'] = Message::success("Conta bancária excluída com sucesso!");
                     Helpers::redirect('motorista/conta-bancaria');
 
                 } else {
-                    $_SESSION['msg'] = Message::warning("Erro ao tentar excluir seu cartão. Tente novamente.");
+                    $_SESSION['msg'] = Message::warning("Erro ao tentar excluir sua conta bancária. Tente novamente.");
                     Helpers::redirect('motorista/conta-bancaria');
                 }
 
@@ -164,7 +164,7 @@ class AccountBankController
             }
         
         } else {
-            $_SESSION['msg'] = Message::error("Erro ao tentar excluir seu cartão. Operação não permitida.");
+            $_SESSION['msg'] = Message::error("Erro ao tentar excluir sua conta bancária. Operação não permitida.");
             Helpers::redirect('motorista/conta-bancaria');
         }
 

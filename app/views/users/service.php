@@ -1,172 +1,202 @@
 <?php include_once __DIR__ . '/../includes/menu.php'; ?>
+    
     <div class="container">
-       <div class="row justify-content-center">
-          <div class="col-xl-12 col-lg-12 col-md-9">
-             <div class="card o-hidden border-0 my-5">
+    <div class="row justify-content-center">
+        <div class="col-xl-12 col-lg-12 col-md-9">
+            <div class="card o-hidden border-0 my-5">
                 <div class="card-body p-0">
-                   <div class="row">
-                      <div class="col-lg-12">
-                         <div class="p-3 mb-4 ">
-                            <div class="d-sm-flex align-items-center justify-content-between">
-                               <h1 class="h3 mb-4 text-gray-800">Em que podemos te ajudar hoje? 😊</h1>
-                            </div>
-                            <!-- Content Row -->
-                            <div class="row">
-                               <div class="col-xl-6 col-md-6 mb-4">
-                                  <div class="card border-left-primary h-100 py-4">
-                                     <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                           <div class="col md-6">
-                                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                 Enviar um item
-                                              </div>
-                                              <div class="h5 mb-0 text-bold text-gray-800">Pedir para um motorista parceiro entregar um item</div>
-                                           </div>
-                                           <div class="col-auto">
-                                              <i class="fa fa-share fa-2x text-gray-300" aria-hidden="true"></i>
-                                           </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="p-3 mb-4 ">
+                                <div class="d-sm-flex align-items-center justify-content-between">
+                                    <h1 class="h3 mb-4 text-gray-800">Em que podemos te ajudar hoje? 😊</h1>
+                                </div>
+                                <!-- Content Row -->
+                                <div class="row">
+                                    <div class="col-xl-6 col-md-6 mb-4">
+                                        <div class="card border-left-primary h-100 py-4">
+                                            <div class="card-body">
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col md-6">
+                                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                            Enviar um item
+                                                        </div>
+                                                        <div class="h5 mb-0 text-bold text-gray-800">Pedir para um motorista parceiro entregar um item</div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <i class="fa fa-share fa-2x text-gray-300" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                     </div>
-                                  </div>
-                               </div>
-                               <div class="col-xl-6 col-md-6 mb-4">
-                                  <div class="card border-left-primary h-100 py-4">
-                                     <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                           <div class="col md-6">
-                                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                 Receber um item
-                                              </div>
-                                              <div class="h5 mb-0 text-gray-800">Pedir para um motorista parceiro retirar um item</div>
-                                           </div>
-                                           <div class="col-auto">
-                                              <i class="fa fa-share fa-2x text-gray-300" style="transform: scaleX(-1);" aria-hidden="true"></i>
-                                           </div>
+                                    </div>
+                                    <div class="col-xl-6 col-md-6 mb-4">
+                                        <div class="card border-left-primary h-100 py-4">
+                                            <div class="card-body">
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col md-6">
+                                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                            Receber um item
+                                                        </div>
+                                                        <div class="h5 mb-0 text-gray-800">Pedir para um motorista parceiro retirar um item</div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <i class="fa fa-share fa-2x text-gray-300" style="transform: scaleX(-1);" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                     </div>
-                                  </div>
-                               </div>
-                            </div>
-
-                            <div class="container spad">
-                                <div class="section-title" data-aos="fade-right" data-aos-once="true">
-                                    <h2>Calcule sua Rota</h2>
+                                    </div>
                                 </div>
 
-                                <div class="row mt-4">
-                                    <div class="col-md-8">
-                                        <div id="map"></div>
+                                <div class="container spad">
+                                    <div class="section-title" data-aos="fade-right" data-aos-once="true">
+                                        <h2>Calcule sua Rota</h2>
                                     </div>
 
-                                    <div class="col-md-4">
-                                        <div class="results">
-                                            <button class="site-btn mt-2" onclick="getUserLocation()">
-                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Encontrar Minha Localização
-                                            </button>
+                                    <div class="row mt-4">
+                                        <div class="col-md-7">
+                                            <div id="map"></div>
+                                        </div>
 
-                                            <form action="<?= BASE_URL ?>usuario/delivery/new" method="post" id="deliveryForm">
-                                                <p>Origem: <span id="origin">Clique no mapa para definir</span></p>
-                                                <p>Número: <input class="form-control" type="text" name="sender_house_number" id="sender_house_number"></p>
-                                                <p>Destino: <span id="destination">Clique no mapa para definir</span></p>
-                                                <p>Quem vai receber? <input class="form-control" type="text" name="recipient_name" id="recipient_name"></p>
-                                                <p>Número: <input class="form-control" type="text" name="recipient_house_number" id="recipient_house_number"></p>
-                                                <p>Peso total: <input class="form-control" type="text" name="weight" id="weight"></p>
-                                                <p>Distância por estrada: <span id="distance"></span></p>
-                                                <p>Tempo estimado: <span id="duration"></span></p>
-                                                <p id="cost">Custo estimado: R$<span id="cost"></span></p>
-                                                <div class="input-group col-md-12">
-                                                    <label for="vehicle_type_id">Selecione o tipo de veículo:</label>
-                                                    <select id="vehicle_type_id" name="vehicle_type_id" class="form-select col-md-12">
-                                                        <option value="">Selecione</option>
-                                                        <?php foreach($vehicleTypes as $vehicleType){ ?>
+                                        <div class="col-md-5">
+                                            <div class="results">
+                                                <button class="site-btn mt-2" onclick="getUserLocation()">
+                                                    <i class="fa fa-map-marker" aria-hidden="true"></i> Encontrar Minha Localização
+                                                </button>
+
+                                                <form action="<?= BASE_URL ?>usuario/delivery/new" method="post" id="deliveryForm">
+                                                    <div class="form-group">
+                                                        <label for="origin">Origem:</label>
+                                                        <p><span id="origin">Clique no mapa para definir</span></p>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sender_house_number">Número:</label>
+                                                        <input class="form-control" type="text" name="sender_house_number" id="sender_house_number">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="destination">Destino:</label>
+                                                        <p><span id="destination">Clique no mapa para definir</span></p>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="recipient_name">Quem vai receber?</label>
+                                                        <input class="form-control" type="text" name="recipient_name" id="recipient_name">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="recipient_house_number">Número:</label>
+                                                        <input class="form-control" type="text" name="recipient_house_number" id="recipient_house_number">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="weight">Peso total:</label>
+                                                        <input class="form-control" type="text" name="weight" id="weight">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="distance">Distância por estrada:</label>
+                                                        <span id="distance"></span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="duration">Tempo estimado:</label>
+                                                        <span id="duration"></span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="cost">Custo estimado:</label>
+                                                        R$ <span id="cost"></span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="vehicle_type_id">Selecione o tipo de veículo:</label>
+                                                        <select onchange="calculateCost()" id="vehicle_type_id" name="vehicle_type_id" class="form-select col-md-12">
+                                                            <option value="">Selecione</option>
+                                                            <?php foreach($vehicleTypes as $vehicleType){ ?>
                                                             <option value="<?= $vehicleType->getId() ?>">
                                                                 <?= $vehicleType->getType_name() . " | R$ " . number_format($vehicleType->getBase_rate(), 2, ',','.') . " | R$ " . number_format($vehicleType->getRate_per_km(), 2, ',','.') . " / Km | Max:" . $vehicleType->getMax_weight() . "Kg" ?>
                                                             </option>
-                                                        <?php } ?>
-                                                    </select>
-                                                    <label for="payments_type">Selecione o tipo de pagamento:</label>
-                                                    <select id="payments_type" name="payments_type" class="form-select col-md-12">
-                                                        <option value="">Selecione</option>
-                                                        <option value="4">Pagar com pix</option>
-                                                        <?php foreach($cards as $card){ ?>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="payments_type">Selecione o tipo de pagamento</label>
+                                                        <select id="payments_type" name="payments_type" class="form-select col-md-12">
+                                                            <option value="">Selecione</option>
+                                                            <option value="4">Pagar com pix</option>
+                                                            <?php foreach($cards as $card){ ?>
                                                             <option value="<?= $card->getId() ?>">
                                                                 <?= substr($card->getCard_number(), 0, strrpos($card->getCard_number(), '.' ) - 9 ).'**** ****'; ?>
                                                             </option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                                <p>Detalhes: <input class="form-control" type="text" name="delivery_details" id="delivery_details"></p>
-                                                <button class="site-btn" onclick="calculateCost()">
-                                                    <i class="fa fa-usd" aria-hidden="true"></i> Calcular Custo
-                                                </button>
-                                                <button class="site-btn-danger" onclick="clearMap()">
-                                                    <i class="fa fa-times" aria-hidden="true"></i> Limpar Mapa
-                                                </button>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="delivery_details">Detalhes:</label>
+                                                        <textarea class="form-control" type="text" name="delivery_details" id="delivery_details"></textarea>
+                                                    </div>
+                                                    <input type="hidden" name="user_id" id="user_id" value="<?= $_SESSION['user_id']; ?>">
+                                                    <input type="hidden" name="sender_latitude" id="sender_latitude" value="">
+                                                    <input type="hidden" name="sender_longitude" id="sender_longitude" value="">
+                                                    <input type="hidden" name="sender_address_details" id="sender_address_details" value="">
+                                                    <input type="hidden" name="recipient_latitude" id="recipient_latitude" value="">
+                                                    <input type="hidden" name="recipient_longitude" id="recipient_longitude" value="">
+                                                    <input type="hidden" name="recipient_address_details" id="recipient_address_details" value="">
+                                                    <input type="hidden" name="total_km" id="total_km" value="">
+                                                    <input type="hidden" name="total_price" id="total_price" value="">
+                                                    <input type="hidden" name="address" id="address" value="">
 
-                                                <!-- Inputs hidden -->
-                                                <input type="hidden" name="user_id" id="user_id" value="<?= $_SESSION['user_id']; ?>">
-                                                <input type="hidden" name="sender_latitude" id="sender_latitude" value="">
-                                                <input type="hidden" name="sender_longitude" id="sender_longitude" value="">
-                                                <input type="hidden" name="sender_address_details" id="sender_address_details" value="">
-                                                <input type="hidden" name="recipient_latitude" id="recipient_latitude" value="">
-                                                <input type="hidden" name="recipient_longitude" id="recipient_longitude" value="">
-                                                <input type="hidden" name="recipient_address_details" id="recipient_address_details" value="">
-                                                <input type="hidden" name="total_km" id="total_km" value="">
-                                                <input type="hidden" name="total_price" id="total_price" value="">
-                                                <input type="hidden" name="address" id="address" value="">
-                                                <button type="submit" class="site-btn site-btn-secondary" id="solicitarButton">
-                                                    <i class="fa fa-save"></i> Solicitar
-                                                </button>
+                                                    <button type="submit" class="site-btn site-btn-secondary mb-4 mt-4" id="solicitarButton">
+                                                        <i class="fa fa-save"></i> Solicitar
+                                                    </button>
 
-                                                <div class="modal fade" id="pagPix" tabindex="-1" width="100%" role="dialog" aria-hidden="true">
-                                                   <div class="modal-dialog" role="document">
-                                                      <div class="modal-content">
-                                                         <div class="modal-header">
-                                                            <h5 class="modal-title"><i class="fa fa-money" aria-hidden="true"></i> Pagar por pix</h5>
-                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">×</span>
-                                                            </button>
-                                                         </div>
-                                                         <div class="modal-body text-center">
-                                                            <div class="image-coupled">
-                                                               <img src="<?= IMG ?>/qrcode.png" class="img-fluid img-responsive" style="width: 60%;">
-                                                               <h4 class="text-muted mb-2 text-center" id="cnpj" value="81.152.094/0001-16">81.152.094/0001-16</h4>
-                                                               <button class="btn btn-primary btn-sm" id="copiarCNPJ"><i class="fa fa-clone" aria-hidden="true"></i> Copiar CNPJ</button>
+                                                    <div class="modal fade" id="pagPix" tabindex="-1" width="100%" role="dialog" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title"><i class="fa fa-money" aria-hidden="true"></i> Pagar por pix</h5>
+                                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">×</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body text-center">
+                                                                    <div class="image-coupled">
+                                                                        <img src="<?= IMG ?>/qrcode.png" class="img-fluid img-responsive" style="width: 60%;">
+                                                                        <h4 class="text-muted mb-2 text-center" id="cnpj" value="81.152.094/0001-16">81.152.094/0001-16</h4>
+                                                                        <button class="btn btn-primary btn-sm" id="copiarCNPJ"><i class="fa fa-clone" aria-hidden="true"></i> Copiar CNPJ</button>
+                                                                    </div>
+                                                                    <hr>
+                                                                    <div class="align-items-center text-center">
+                                                                        <button type="submit" class="btn btn-success btn-icon-split" name="finalizar" id="finalizar">
+                                                                            <span class="icon text-white-50">
+                                                                                <i class="fas fa-check"></i>
+                                                                            </span>
+                                                                            <span class="text">Solicitar</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <hr>
-                                                            <div class="row mt-3">
-                                                               <div class="col">
-                                                                  <p class="text-muted mb-2">O status do seu pedido será atualizado assim que a equipe verificar o pagamento. Após efetuar o pagamento, clique em "Finalizar compra" para concluir sua compra.</p>
-                                                               </div>
-                                                            </div>
-                                                            <hr>
-                                                            <div class="align-items-center text-center">
-                                                               <button type="submit" class="btn btn-success btn-icon-split" name="finalizar" id="finalizar">
-                                                                  <span class="icon text-white-50">
-                                                                     <i class="fas fa-check"></i>
-                                                                  </span>
-                                                                  <span class="text">Solicitar</span>
-                                                               </button>
-                                                            </div>
-                                                         </div>
-                                                      </div>
-                                                   </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                                <div class="d-sm-flex align-items-center justify-content-between">
+                                                    <button class="site-btn" onclick="calculateCost()">
+                                                        <i class="fa fa-usd" aria-hidden="true"></i> Calcular Custo
+                                                    </button>
+                                                    <button class="site-btn-danger" onclick="clearMap()">
+                                                        <i class="fa fa-times" aria-hidden="true"></i> Limpar Mapa
+                                                    </button>
                                                 </div>
-                                            </form>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
-
-
-                         </div>
-                      </div>
-                   </div>
+                        </div>
+                    </div>
                 </div>
-             </div>
-          </div>
-       </div>
+            </div>
+        </div>
     </div>
+</div>
 
 <script type="text/javascript">
                    
@@ -416,6 +446,7 @@
                       }
                    } else {
                       alert('Selecione uma origem e destino no mapa.');
+                      $('#vehicle_type_id').val("");
                    }
                 }
 

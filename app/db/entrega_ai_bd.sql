@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 29/11/2023 às 18:59
+-- Tempo de geração: 29/11/2023 às 23:28
 -- Versão do servidor: 10.4.20-MariaDB
 -- Versão do PHP: 8.0.9
 
@@ -55,13 +55,6 @@ CREATE TABLE `banking_info` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Despejando dados para a tabela `banking_info`
---
-
-INSERT INTO `banking_info` (`id`, `driver_id`, `account_number`, `account_holder_name`, `bank_name`, `created_at`, `updated_at`) VALUES
-(1, 24, '123123123123', 'Teste', 'Ress', '2023-11-29 17:38:26', '2023-11-29 17:38:26');
-
 -- --------------------------------------------------------
 
 --
@@ -101,8 +94,7 @@ CREATE TABLE `deliveries` (
 --
 
 INSERT INTO `deliveries` (`id`, `delivery_id`, `user_id`, `driver_id`, `sender_latitude`, `sender_longitude`, `sender_address_details`, `sender_house_number`, `recipient_name`, `recipient_latitude`, `recipient_longitude`, `recipient_address_details`, `recipient_house_number`, `vehicle_type_id`, `vehicle_id`, `weight`, `total_km`, `total_price`, `delivery_status_id`, `delivery_details`, `delivery_date`, `current_latitude`, `current_longitude`, `created_at`, `updated_at`) VALUES
-(37, 'BRAKE11BI27P178AI', 81, 0, '-4.9619237725246', '-39.007172584534', 'Av. Belo Horizonte, Campo Velho, Quixadá, CE, BR', 654, 'Teste', '-4.9726978221939', '-39.024038314819', 'CE-060, Combate, Quixadá, CE, BR', '2', 2, 0, '122', '2,8 km', 12.00, 12, 'Entrega Urgente', NULL, '', '', '2023-11-28 21:50:00', '2023-11-28 23:10:43'),
-(39, 'BRGGF1U003J4MO2AI', 81, 24, '-4.9789398497117', '-39.006915092468', 'R. Juvêncio Alves de Oliveira, Baviera, Quixadá, CE, BR', 654, 'Teste', '-4.9627788622627', '-39.024338722229', 'Av. Estados Unidos, São João, Quixadá, CE, BR', '2', 2, 10, '122', '3,6 km', 12.00, 4, 'Entrega Urgente', NULL, '-4.9712', '-39.0175', '2023-11-29 12:10:06', '2023-11-29 16:59:01');
+(42, 'BR8HMZW1SIG19EUAI', 81, NULL, '-4.9563656622292', '-39.006743431091', 'Av. Jesus Maria e José, Jardim Monolitos, Quixadá, CE, BR', 654, 'Teste', '-4.9723985454149', '-39.016442298889', 'Av. Plácido Castelo, Centro, Quixadá, CE, BR', '211', 2, 0, '122', '2,7 km', 12.00, 1, 'Entrega Urgente', NULL, '', '', '2023-11-29 22:28:04', '2023-11-29 22:28:04');
 
 -- --------------------------------------------------------
 
@@ -379,13 +371,13 @@ ALTER TABLE `adresses`
 -- AUTO_INCREMENT de tabela `banking_info`
 --
 ALTER TABLE `banking_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `deliveries`
 --
 ALTER TABLE `deliveries`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de tabela `delivery_status`
