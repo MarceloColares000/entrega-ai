@@ -64,52 +64,6 @@ class DeliveryDAO extends GenericDAO
     }
 
     // Pegar o todos os pedidos do usuário
-    /*
-    public function getDeliveryId($delivery_id)
-    { 
-        $sql = "
-        SELECT 
-        deliveries.id AS delivery_id,
-        deliveries.user_id,
-        vehicles.id AS vehicle_id, 
-        vehicles.brand AS vehicle_brand, 
-        vehicles.model AS vehicle_model, 
-        vehicles.plate_number AS vehicle_plate_number, 
-        vehicles.color AS vehicle_color,
-        vehicle_types.id AS vehicle_type_id, 
-        vehicle_types.type_name AS vehicle_type_name, 
-        vehicle_types.base_rate AS vehicle_base_rate, 
-        vehicle_types.rate_per_km AS vehicle_rate_per_km,
-        drivers.id AS driver_id,
-        drivers.name AS driver_name,
-        delivery_status.status_name AS delivery_status_name,
-        delivery_status.status_description AS delivery_status_description,
-        delivery_status.icon AS delivery_icon,
-        delivery_status.css_class AS delivery_css_class
-        FROM deliveries
-        JOIN vehicle_types ON deliveries.vehicle_type_id = vehicle_types.id
-        LEFT JOIN drivers ON deliveries.driver_id = drivers.id
-        LEFT JOIN delivery_status ON deliveries.delivery_status_id = delivery_status.id
-        LEFT JOIN vehicles ON deliveries.vehicle_id = vehicles.id
-        WHERE deliveries.id = :delivery_id
-        GROUP BY 
-        deliveries.id,
-        vehicles.id,
-        drivers.id,
-        vehicle_types.id,
-        delivery_status.id
-        ORDER BY deliveries.created_at DESC;
-        ";
-
-        $params = [
-            'delivery_id' => $delivery_id,
-        ];
-
-        return $this->executeQuery($sql, $params);
-    }
-    */
-
-    //
     public function getDeliveryId($delivery_id)
     { 
         $sql = "
@@ -151,6 +105,11 @@ class DeliveryDAO extends GenericDAO
         $sql = "
         SELECT 
         deliveries.*, 
+        vehicles.id AS vehicle_id, 
+        vehicles.brand AS vehicle_brand, 
+        vehicles.model AS vehicle_model, 
+        vehicles.plate_number AS vehicle_plate_number, 
+        vehicles.color AS vehicle_color,
         vehicle_types.id AS vehicle_type_id, 
         vehicle_types.type_name AS vehicle_type_name, 
         vehicle_types.base_rate AS vehicle_base_rate, 
@@ -165,6 +124,7 @@ class DeliveryDAO extends GenericDAO
         JOIN vehicle_types ON deliveries.vehicle_type_id = vehicle_types.id
         LEFT JOIN drivers ON deliveries.driver_id = drivers.id
         LEFT JOIN delivery_status ON deliveries.delivery_status_id = delivery_status.id
+        LEFT JOIN vehicles ON deliveries.vehicle_id = vehicles.id
         WHERE deliveries.driver_id = :driver_id
         ORDER BY deliveries.created_at DESC;
         ";

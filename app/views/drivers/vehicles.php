@@ -1,79 +1,73 @@
 <?php include_once __DIR__ . '/../includes/menu.php'; ?>
-
+      
       <div class="container">
-         <div class="row justify-content-center">
-            <div class="col-xl-12 col-lg-12 col-md-9">
-               <div class="card o-hidden border-0 my-5">
-                  <div class="card-body p-0">
-                     <div class="row">
-                        <div class="col-lg-12">
-                           <div class="p-3 mb-4 ">
-                              <div class="d-sm-flex align-items-center justify-content-between">
-                                 <h1 class="h3 mb-4 text-gray-800"><i class="fa fa-map-marker"></i> Meus veículos</h1>
-                                 <a class=" site-btn-secondary site-btn" data-toggle="modal" data-target="#addVehiclesModal"><i class="fas fa-fw fa-plus"></i> Adicionar novo</a>
-                              </div>
-                              <div class="mb-4 mt-4">
-                                 <?= SessionMessage(); ?>
-                              </div>
-                              <div class="container">
-                                <?php if (empty($vehicles)) { ?>
-                                    <div class="text-center mt-5">
-                                        <img src="<?= IMG ?>/no_data.svg" style="width: 15%;" class="img-fluid" alt="Sem dados">
-                                        <p class="mt-4 mb-4">Você ainda não cadastrou nenhum veículo!</p>
-                                    </div>
-                                <?php } else { ?>
-                                    <div class="row">
-                                        <?php foreach ($vehicles as $vehicle) { ?>
-                                            <div class="col-md-6">
-                                                <div class="card mb-3">
-                                                    <div class="card-header">
-                                                        <h5 class="card-title">
-                                                            <i class="fa fa-car" aria-hidden="true"></i>
-                                                            <?= $vehicle->getBrand(); ?> <?= $vehicle->getModel(); ?>
-                                                            <span class="float-right">
-                                                                <button class="btn btn-sm btn-primary mr-2" data-toggle="modal" data-target="#editVehiclesModal<?= $vehicle->getId(); ?>" title="Editar">
-                                                                    <i class="fa fa-edit" aria-hidden="true"></i>
-                                                                </button>
-                                                                <form action="<?= BASE_URL ?>motorista/veiculo/delete" method="post" onsubmit="return confirm('Você tem certeza que quer apagar esse veículo?')" class="d-inline">
-                                                                    <input type="hidden" name="id" id="id" value="<?= $vehicle->getId(); ?>">
-                                                                    <button type="submit" class="btn btn-sm btn-danger" title="Apagar">
-                                                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                                                    </button>
-                                                                </form>
-                                                            </span>
-                                                        </h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col-sm-6">
-                                                                <p class="card-text">
-                                                                    <strong>Placa:</strong> <?= $vehicle->getPlate_number(); ?><br>
+         <div class="view-account">
+            <section class="module">
+               <div class="module-inner">
+                  <?php include_once __DIR__ . '/../includes/sideMenu.php'; ?>
+                  <div class="content-panel">
+                    <div class="d-sm-flex align-items-center justify-content-between">
+                       <h1 class="h3 mb-4 text-gray-800"><i class="fa fa-map-marker"></i> Meus veículos</h1>
+                        <a class=" site-btn-secondary site-btn" data-toggle="modal" data-target="#addVehiclesModal"><i class="fas fa-fw fa-plus"></i> Adicionar novo</a>
+                    </div>
+                     <div class="mb-4 mt-4">
+                        <?= SessionMessage(); ?>
+                     </div>
+                     <div class="container">
+                        <?php if (empty($vehicles)) { ?>
+                            <div class="text-center mt-5">
+                                <img src="<?= IMG ?>/no_data.svg" style="width: 15%;" class="img-fluid" alt="Sem dados">
+                                <p class="mt-4 mb-4">Você ainda não cadastrou nenhum veículo!</p>
+                            </div>
+                        <?php } else { ?>
+                            <div class="row">
+                                <?php foreach ($vehicles as $vehicle) { ?>
+                                    <div class="col-md-6">
+                                        <div class="card mb-3">
+                                            <div class="card-header">
+                                                <h5 class="card-title">
+                                                    <i class="fa fa-car" aria-hidden="true"></i>
+                                                    <?= $vehicle->getBrand(); ?> <?= $vehicle->getModel(); ?>
+                                                    <span class="float-right">
+                                                        <button class="btn btn-sm btn-primary mr-2" data-toggle="modal" data-target="#editVehiclesModal<?= $vehicle->getId(); ?>" title="Editar">
+                                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                                        </button>
+                                                        <form action="<?= BASE_URL ?>motorista/veiculo/delete" method="post" onsubmit="return confirm('Você tem certeza que quer apagar esse veículo?')" class="d-inline">
+                                                            <input type="hidden" name="id" id="id" value="<?= $vehicle->getId(); ?>">
+                                                            <button type="submit" class="btn btn-sm btn-danger" title="Apagar">
+                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </button>
+                                                        </form>
+                                                    </span>
+                                                </h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <p class="card-text">
+                                                            <strong>Placa:</strong> <?= $vehicle->getPlate_number(); ?><br>
 
-                                                                    <strong>Cor:</strong> <span class="badge text-white" style="background-color: <?= $vehicle->getColor(); ?>;">⠀</span>
-                                                                </p>
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <p class="card-text">
-                                                                    <strong>Detalhes:</strong><br>
-                                                                    <?= $vehicle->getDetails(); ?>
-                                                                </p>
-                                                            </div>
-                                                        </div>
+                                                            <strong>Cor:</strong> <span class="badge text-white" style="background-color: <?= $vehicle->getColor(); ?>;">⠀</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <p class="card-text">
+                                                            <strong>Detalhes:</strong><br>
+                                                            <?= $vehicle->getDetails(); ?>
+                                                        </p>
                                                     </div>
                                                 </div>
-                                            </div>     
+                                            </div>
+                                        </div>
+                                    </div>     
 
-                                        <?php } ?>
-                                    </div>
                                 <?php } ?>
                             </div>
-
-                           </div>
+                        <?php } ?>
                         </div>
-                     </div>
                   </div>
                </div>
-            </div>
+            </section>
          </div>
       </div>
 

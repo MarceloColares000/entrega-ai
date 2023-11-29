@@ -160,10 +160,8 @@
                                                                     <input type="radio" name="rating" id="estrela_quatro" id="vazio" value="4">
 
                                                                     <label for="estrela_cinco"><i class="opcao fa"></i></label>
-                                                                    <input type="radio" name="rating" id="estrela_cinco" id="vazio" value="5"><br><br>
-
-                                                                    <textarea class="form-control mb-3" name="comment" rows="4" cols="30" placeholder="Digite o seu comentário..."></textarea>
-
+                                                                    <input type="radio" name="rating" id="estrela_cinco" id="vazio" value="5">
+                                                                    
                                                                     <input type="hidden" name="delivery_id" id="delivery_id" value="<?= $delivery->getId() ?>">
                                                                     <input type="hidden" name="driver_id" id="driver_id" value="<?= $delivery->getDriver_id() ?>">
 
@@ -174,6 +172,15 @@
                                                             </form>
 
     
+                                                        </div>
+                                                        <div class="col-md-12 mb-4 mt-4">
+                                                            <h5>A entrega foi feita corretamente?</h5>
+                                                            <label>
+                                                                <input type="radio" name="radio" value="1"> Sim
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="radio" value="0"> Não
+                                                            </label>
                                                         </div>
                                                     <?php } ?>
                                                     <div class="col-md-12">

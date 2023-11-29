@@ -111,6 +111,7 @@ class GenericDAO
     */
 
     // Selecionar um registro por ID
+    /*
     public function getByDeliveryId($delivery_id)
     {
         $sql = "SELECT * FROM " . $this->table . " WHERE delivery_id = :delivery_id LIMIT 1";
@@ -122,7 +123,7 @@ class GenericDAO
         return $this->executeQuery($sql, $params);
         
     }
-
+    */
     // Selecionar os registros com condicições
     public function getByConditions($conditions)
     {

@@ -31,6 +31,47 @@
                                                             <div class="col-md-12 mb-4">
                                                                 <p class="text-muted"><i class="far fa-clock"></i> Solicitado em: <?= date('d/m/Y, H:i', strtotime($deliveries->getCreated_at())); ?></p>
                                                             </div>
+                                                            <div class="col-md-6">
+                                                                <h5 class="mb-4">Encontrar Minha Localização:</h5>
+                                                                <button class="site-btn mt-2" onclick="getUserLocation()">
+                                                                    <i class="fa fa-map-marker" aria-hidden="true"></i> Encontrar Minha Localização
+                                                                </button>
+                                                                <p>Origem: <span id="origin">Clique no mapa para definir</span></p>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <h5 class="mb-4">Atualizar status da entrega:</h5>
+                                                                <form action="<?= BASE_URL ?>/motorista/delivery/updateStatus" method="post">
+                                                                    <select class="form-control mb-2" name="delivery_status_id" id="delivery_status_id" required>
+                                                                        <option value="">Selecione</option>
+                                                                        <option value="3">Já estou a caminho</option>
+                                                                        <option value="5">Já peguei o pacote e estou a caminho</option>
+                                                                        <option value="7">Problemas na entrega</option>
+                                                                        <option value="11">Devolvi o pacote</option>
+                                                                    </select>
+                                                                    <input type="hidden" name="id" id="id" value="<?= $deliveries->getId() ?>">
+                                                                    <input type="hidden" name="delivery_id" id="delivery_id" value="<?= $delivery_id ?>">
+                                                                    <button type="submit" class="btn site-btn mb-2">Atualizar</button>
+                                                                </form>
+
+                                                                <form action="<?= BASE_URL ?>motorista/delivery/cancel" method="post" onsubmit="return confirm('Você tem certeza que quer cancelar essa entrega?')">
+                                                                    <?php foreach($delivery as $deliveries){ ?>
+                                                                        <input type="hidden" name="id" id="id" value="<?= $deliveries->getId() ?>">
+                                                                    <?php } ?>
+                                                                    <button class="btn btn-danger mb-2" type="submit">
+                                                                        <i class="fa fa-ban"></i> Cancelar encomenda
+                                                                    </button>
+                                                                </form>
+
+                                                                <form action="<?= BASE_URL ?>motorista/delivery/delivered" method="post" onsubmit="return confirm('Você entregou corretamente essa entrega?')">
+                                                                    <?php foreach($delivery as $deliveries){ ?>
+                                                                        <input type="hidden" name="id" id="id" value="<?= $deliveries->getId() ?>">
+                                                                    <?php } ?>
+                                                                    <button class="btn btn-success mb-2" type="submit">
+                                                                        <i class="fa fa-check-circle"></i> Entregue
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+
                                                             <div class="col-md-12 mb-4">
                                                                 <p class="text-muted mb-0"><?= $deliveries->getDelivery_Status_Description(); ?></p>
                                                             </div>
@@ -91,19 +132,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <button class="site-btn mt-2" onclick="getUserLocation()">
-                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Encontrar Minha Localização
-                                    </button>
-                                    <p>Origem: <span id="origin">Clique no mapa para definir</span></p>
-                                    <form action="<?= BASE_URL ?>motorista/delivery/cancel" method="post" onsubmit="return confirm('Você tem certeza que quer cancelar essa entrega?')">
-                                        <?php foreach($delivery as $deliveries){ ?>
-                                            <input type="hidden" name="id" id="id" value="<?= $deliveries->getId() ?>">
-                                        <?php } ?>
-                                        <button class="btn btn-danger" type="submit">
-                                            <i class="fa fa-ban"></i> Cancelar encomenda
-                                        </button>
-                                    </form>
 
                                 </div>
 

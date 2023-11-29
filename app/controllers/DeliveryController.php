@@ -351,7 +351,7 @@ class DeliveryController
 
         $deliveryDAO = new DeliveryDAO();
 
-        $delivery = $deliveryDAO->getByDeliveryId($delivery_id);
+        $delivery = $deliveryDAO->getDeliveryId($delivery_id);
 
         $title = "Meu histórico | Entrega aí";
         $data = [
@@ -415,6 +415,7 @@ class DeliveryController
         $delivery = new Delivery();
 
         $delivery->setDriver_id(0);
+        $delivery->setVehicle_id(0);
         $delivery->setDelivery_status_id(1);
 
         $deliveryDAO = new deliveryDAO();
@@ -436,6 +437,92 @@ class DeliveryController
 
         } else {
             $_SESSION['msg'] = Message::error("Erro ao cancelar a entregas. Tente novamente!");
+            Helpers::redirect('motorista/historico');
+        }
+    
+    }
+
+    //Pego o pacote e a caminho da entrega
+    public function updateStatus()
+    {   
+        
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            Helpers::redirect('motorista/historico');
+        }
+
+        $id = isset($_POST['id']) ? $_POST['id'] : null;
+        $driver_id = isset($_SESSION['driver_id']) ? (int)$_SESSION['driver_id'] : null;
+        $delivery_id = isset($_POST['delivery_id']) ? $_POST['delivery_id'] : null;
+        $delivery_status_id = isset($_POST['delivery_status_id']) ? $_POST['delivery_status_id'] : null;
+
+        $delivery = new Delivery();
+
+        $delivery->setDelivery_status_id($delivery_status_id);
+
+        $deliveryDAO = new deliveryDAO();
+
+        // Verifica se o delivery pertence ao usuario
+        $isDriverdelivery = $deliveryDAO->getByConditions("driver_id = $driver_id AND id = {$id}");
+
+        if($isDriverdelivery){
+
+            $updateddelivery = $deliveryDAO->update($delivery, "id = {$id}");
+
+            if ($updateddelivery) {
+                $_SESSION['msg'] = Message::success("Status atualizado com sucesso!");
+                $redirectUrl = BASE_URL . 'motorista/delivering/' . urlencode($delivery_id);
+                header("Location: $redirectUrl");
+                exit();
+            } else {
+                $_SESSION['msg'] = Message::error("Erro ao atualizar status. Tente novamente!");
+                $redirectUrl = BASE_URL . 'motorista/delivering/' . urlencode($delivery_id);
+                header("Location: $redirectUrl");
+                exit();
+            }
+
+        } else {
+            $_SESSION['msg'] = Message::error("Erro ao atualizar statuss. Tente novamente!");
+            $redirectUrl = BASE_URL . 'motorista/delivering/' . urlencode($delivery_id);
+            header("Location: $redirectUrl");
+            exit();
+        }
+    
+    }
+
+    //Concluir entrega
+    public function deliveredDeliveryDriver()
+    {   
+        
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            Helpers::redirect('motorista/historico');
+        }
+
+        $id = isset($_POST['id']) ? $_POST['id'] : null;
+        $driver_id = isset($_SESSION['driver_id']) ? (int)$_SESSION['driver_id'] : null;
+
+        $delivery = new Delivery();
+
+        $delivery->setDelivery_status_id(4);
+
+        $deliveryDAO = new deliveryDAO();
+
+        // Verifica se o delivery pertence ao usuario
+        $isDriverdelivery = $deliveryDAO->getByConditions("driver_id = $driver_id AND id = {$id}");
+
+        if($isDriverdelivery){
+
+            $updateddelivery = $deliveryDAO->update($delivery, "id = {$id}");
+
+            if ($updateddelivery) {
+                $_SESSION['msg'] = Message::success("Entrega concluída com sucesso!");
+                Helpers::redirect('motorista/historico');
+            } else {
+                $_SESSION['msg'] = Message::error("Erro ao concluir a entrega. Tente novamente!");
+                Helpers::redirect('motorista/historico');
+            }
+
+        } else {
+            $_SESSION['msg'] = Message::error("Erro ao concluir a entregas. Tente novamente!");
             Helpers::redirect('motorista/historico');
         }
     

@@ -50,8 +50,8 @@
                   <li class="<?= ($menuDinamic == "/veiculos" ? "active" : ""); ?>">
                      <a href="<?= BASE_URL ?>motorista/veiculos"><span class="fa fa-car"></span> Meus veículos</a>
                   </li>
-                  <li class="<?= ($menuDinamic == "/mudar-senha" ? "active" : ""); ?>">
-                     <a href="<?= BASE_URL ?>motorista/mudar-senha"><span class="fa fa-key"></span> Mudar senha</a>
+                  <li class="<?= ($menuDinamic == "/contas" ? "active" : ""); ?>">
+                     <a href="<?= BASE_URL ?>motorista/conta-bancaria"><span class="fa fa-credit-card"></span> Minhas contas</a>
                   </li>
                </ul>
             </nav>

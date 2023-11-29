@@ -19,6 +19,7 @@ use App\Controllers\DeliveryController;
 use App\Controllers\AddressController;
 use App\Controllers\CardController;
 use App\Controllers\VehicleController;
+use App\Controllers\AccountBankController;
 use App\Controllers\DriverController;
 use App\Controllers\ErrorController;
 
@@ -99,11 +100,19 @@ foreach ($driverRoutesGroup as $driverRoute) {
     $dispatcher->addRoute($driverRoute . '/veiculo/delete', VehicleController::class, 'deleteVehicle');
     $dispatcher->addRoute($driverRoute . '/veiculo/edit', VehicleController::class, 'updateVehicle');
 
+    // Rotas de conta bancária
+    $dispatcher->addRoute($driverRoute . '/conta-bancaria', AccountBankController::class, 'renderAccountBank');
+    $dispatcher->addRoute($driverRoute . '/conta-bancaria/add', AccountBankController::class, 'addAccountBank');
+    $dispatcher->addRoute($driverRoute . '/conta-bancaria/delete', AccountBankController::class, 'deleteAccountBank');
+    $dispatcher->addRoute($driverRoute . '/conta-bancaria/edit', AccountBankController::class, 'updateAccountBank');
+
     // Rotas de serviço
     $dispatcher->addRoute($driverRoute . '/servicos', DeliveryController::class, 'renderAvailableDeliveries');
     $dispatcher->addRoute($driverRoute . '/historico', DeliveryController::class, 'renderHistoricDriver');
     $dispatcher->addRoute($driverRoute . '/acceptDelivery', DeliveryController::class, 'acceptDelivery');
     $dispatcher->addRoute($driverRoute . '/delivery/cancel', DeliveryController::class, 'cancelDeliveryDriver');
+    $dispatcher->addRoute($driverRoute . '/delivery/updateStatus', DeliveryController::class, 'updateStatus');
+    $dispatcher->addRoute($driverRoute . '/delivery/delivered', DeliveryController::class, 'deliveredDeliveryDriver');
     $dispatcher->addRoute($driverRoute . '/delivering/{deliveryId}', DeliveryController::class, 'renderDelivering');
     $dispatcher->addRoute($driverRoute . '/update/update-coordenades', DeliveryController::class, 'updateCoordenades');
 
