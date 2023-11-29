@@ -72,7 +72,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="sender_house_number">Número:</label>
-                                                        <input class="form-control" type="text" name="sender_house_number" id="sender_house_number">
+                                                        <input class="form-control" required type="text" name="sender_house_number" id="sender_house_number">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="destination">Destino:</label>
@@ -80,15 +80,15 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="recipient_name">Quem vai receber?</label>
-                                                        <input class="form-control" type="text" name="recipient_name" id="recipient_name">
+                                                        <input class="form-control" required type="text" name="recipient_name" id="recipient_name">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="recipient_house_number">Número:</label>
-                                                        <input class="form-control" type="text" name="recipient_house_number" id="recipient_house_number">
+                                                        <input class="form-control" required type="text" name="recipient_house_number" id="recipient_house_number">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="weight">Peso total:</label>
-                                                        <input class="form-control" type="text" name="weight" id="weight">
+                                                        <input class="form-control" required type="text" name="weight" id="weight">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="distance">Distância por estrada:</label>
@@ -104,7 +104,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="vehicle_type_id">Selecione o tipo de veículo:</label>
-                                                        <select onchange="calculateCost()" id="vehicle_type_id" name="vehicle_type_id" class="form-select col-md-12">
+                                                        <select onchange="calculateCost()" id="vehicle_type_id" name="vehicle_type_id" class="form-select col-md-12" required>
                                                             <option value="">Selecione</option>
                                                             <?php foreach($vehicleTypes as $vehicleType){ ?>
                                                             <option value="<?= $vehicleType->getId() ?>">
@@ -115,7 +115,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="payments_type">Selecione o tipo de pagamento</label>
-                                                        <select id="payments_type" name="payments_type" class="form-select col-md-12">
+                                                        <select id="payments_type" name="payments_type" class="form-select col-md-12" required>
                                                             <option value="">Selecione</option>
                                                             <option value="4">Pagar com pix</option>
                                                             <?php foreach($cards as $card){ ?>
@@ -127,7 +127,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="delivery_details">Detalhes:</label>
-                                                        <textarea class="form-control" type="text" name="delivery_details" id="delivery_details"></textarea>
+                                                        <textarea class="form-control" required type="text" name="delivery_details" id="delivery_details"></textarea>
                                                     </div>
                                                     <input type="hidden" name="user_id" id="user_id" value="<?= $_SESSION['user_id']; ?>">
                                                     <input type="hidden" name="sender_latitude" id="sender_latitude" value="">
@@ -156,17 +156,11 @@
                                                                 <div class="modal-body text-center">
                                                                     <div class="image-coupled">
                                                                         <img src="<?= IMG ?>/qrcode.png" class="img-fluid img-responsive" style="width: 60%;">
-                                                                        <h4 class="text-muted mb-2 text-center" id="cnpj" value="81.152.094/0001-16">81.152.094/0001-16</h4>
-                                                                        <button class="btn btn-primary btn-sm" id="copiarCNPJ"><i class="fa fa-clone" aria-hidden="true"></i> Copiar CNPJ</button>
-                                                                    </div>
-                                                                    <hr>
-                                                                    <div class="align-items-center text-center">
-                                                                        <button type="submit" class="btn btn-success btn-icon-split" name="finalizar" id="finalizar">
-                                                                            <span class="icon text-white-50">
-                                                                                <i class="fas fa-check"></i>
-                                                                            </span>
-                                                                            <span class="text">Solicitar</span>
-                                                                        </button>
+                                                                        <p class="mb-1"><strong>Pix Copia e Cola:</strong></p>
+                                                                        <div class="col-md-12 mt-0">
+                                                                            <p style="word-break: break-all;">00020126360014BR.GOV.BCB.PIX0114811520940001165204000053039865802BR5924Entrega ai Servicos LTDA6012Quixada - CE62120508ENTEGAAI63042ED4</p>
+                                                                        </div>
+                                                                        <button class="btn btn-primary btn-sm" id="copy"><i class="fa fa-clone" aria-hidden="true"></i> Copiar</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -175,9 +169,6 @@
                                                 </form>
 
                                                 <div class="d-sm-flex align-items-center justify-content-between">
-                                                    <button class="site-btn" onclick="calculateCost()">
-                                                        <i class="fa fa-usd" aria-hidden="true"></i> Calcular Custo
-                                                    </button>
                                                     <button class="site-btn-danger" onclick="clearMap()">
                                                         <i class="fa fa-times" aria-hidden="true"></i> Limpar Mapa
                                                     </button>
@@ -459,6 +450,7 @@
                    document.getElementById('distance').textContent = '';
                    document.getElementById('duration').textContent = '';
                    document.getElementById('cost').textContent = '';
+                   $('#vehicle_type_id').val("");
                    directionsRenderer.setDirections({
                       routes: []
                    });
@@ -478,11 +470,11 @@
             $('#pagPix').modal('show');
          }
 
-         $('#copiarCNPJ').click(function(){
+         $('#copy').click(function(){
              $('#cnpj').select();
                event.preventDefault();
                var ok = document.execCommand('copy');
-               if (ok) { alert('CNPJ copiado para a área de transferência'); }
+               if (ok) { alert('Copiado para a área de transferência'); }
          });
 
       });
