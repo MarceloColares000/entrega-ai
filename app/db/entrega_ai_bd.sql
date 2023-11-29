@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 28/11/2023 às 22:23
--- Versão do servidor: 10.4.28-MariaDB
--- Versão do PHP: 8.0.28
+-- Tempo de geração: 29/11/2023 às 18:59
+-- Versão do servidor: 10.4.20-MariaDB
+-- Versão do PHP: 8.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -37,7 +37,30 @@ CREATE TABLE `adresses` (
   `number` int(10) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `update_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `banking_info`
+--
+
+CREATE TABLE `banking_info` (
+  `id` int(11) NOT NULL,
+  `driver_id` int(11) NOT NULL,
+  `account_number` varchar(50) NOT NULL,
+  `account_holder_name` varchar(250) NOT NULL,
+  `bank_name` varchar(250) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Despejando dados para a tabela `banking_info`
+--
+
+INSERT INTO `banking_info` (`id`, `driver_id`, `account_number`, `account_holder_name`, `bank_name`, `created_at`, `updated_at`) VALUES
+(1, 24, '123123123123', 'Teste', 'Ress', '2023-11-29 17:38:26', '2023-11-29 17:38:26');
 
 -- --------------------------------------------------------
 
@@ -71,7 +94,15 @@ CREATE TABLE `deliveries` (
   `current_longitude` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Despejando dados para a tabela `deliveries`
+--
+
+INSERT INTO `deliveries` (`id`, `delivery_id`, `user_id`, `driver_id`, `sender_latitude`, `sender_longitude`, `sender_address_details`, `sender_house_number`, `recipient_name`, `recipient_latitude`, `recipient_longitude`, `recipient_address_details`, `recipient_house_number`, `vehicle_type_id`, `vehicle_id`, `weight`, `total_km`, `total_price`, `delivery_status_id`, `delivery_details`, `delivery_date`, `current_latitude`, `current_longitude`, `created_at`, `updated_at`) VALUES
+(37, 'BRAKE11BI27P178AI', 81, 0, '-4.9619237725246', '-39.007172584534', 'Av. Belo Horizonte, Campo Velho, Quixadá, CE, BR', 654, 'Teste', '-4.9726978221939', '-39.024038314819', 'CE-060, Combate, Quixadá, CE, BR', '2', 2, 0, '122', '2,8 km', 12.00, 12, 'Entrega Urgente', NULL, '', '', '2023-11-28 21:50:00', '2023-11-28 23:10:43'),
+(39, 'BRGGF1U003J4MO2AI', 81, 24, '-4.9789398497117', '-39.006915092468', 'R. Juvêncio Alves de Oliveira, Baviera, Quixadá, CE, BR', 654, 'Teste', '-4.9627788622627', '-39.024338722229', 'Av. Estados Unidos, São João, Quixadá, CE, BR', '2', 2, 10, '122', '3,6 km', 12.00, 4, 'Entrega Urgente', NULL, '-4.9712', '-39.0175', '2023-11-29 12:10:06', '2023-11-29 16:59:01');
 
 -- --------------------------------------------------------
 
@@ -87,7 +118,7 @@ CREATE TABLE `delivery_status` (
   `css_class` varchar(50) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Despejando dados para a tabela `delivery_status`
@@ -124,7 +155,14 @@ CREATE TABLE `drivers` (
   `type_user` int(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Despejando dados para a tabela `drivers`
+--
+
+INSERT INTO `drivers` (`id`, `name`, `email`, `password`, `phone`, `cpf`, `licence`, `birthdate`, `validated`, `type_user`, `created_at`, `updated_at`) VALUES
+(24, 'Teste Motorista', 'testemotorista@gmail.com', '$2y$10$58IT40jnL/8CK75efzEFnu5oRkKoOgxRzcicYwvkFYlpOtH46OcnG', '88888888888', 2147483647, 2147483647, '2001-11-21', 0, 1, '2023-11-28 21:49:34', '2023-11-29 17:11:36');
 
 -- --------------------------------------------------------
 
@@ -141,7 +179,14 @@ CREATE TABLE `payment_cards` (
   `cvv` varchar(4) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Despejando dados para a tabela `payment_cards`
+--
+
+INSERT INTO `payment_cards` (`id`, `user_id`, `card_number`, `cardholder_name`, `expiration_date`, `cvv`, `created_at`, `updated_at`) VALUES
+(8, 81, '1231 2123 1321 3132', 'TESTE USUARIO', '09/2029', '123', '2023-11-28 21:44:09', '2023-11-29 17:59:36');
 
 -- --------------------------------------------------------
 
@@ -158,7 +203,18 @@ CREATE TABLE `ratings` (
   `comment` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Despejando dados para a tabela `ratings`
+--
+
+INSERT INTO `ratings` (`id`, `delivery_id`, `user_id`, `driver_id`, `rating`, `comment`, `created_at`, `updated_at`) VALUES
+(5, 39, 81, 24, 5, NULL, '2023-11-29 17:07:40', '2023-11-29 17:07:40'),
+(6, 39, 81, 24, 3, NULL, '2023-11-29 17:10:27', '2023-11-29 17:10:27'),
+(7, 39, 81, 24, 2, NULL, '2023-11-29 17:10:32', '2023-11-29 17:10:32'),
+(8, 39, 81, 24, 4, NULL, '2023-11-29 17:10:38', '2023-11-29 17:10:38'),
+(9, 39, 81, 24, 5, NULL, '2023-11-29 17:10:42', '2023-11-29 17:10:42');
 
 -- --------------------------------------------------------
 
@@ -178,7 +234,14 @@ CREATE TABLE `users` (
   `type_user` int(1) NOT NULL DEFAULT 2,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `update_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Despejando dados para a tabela `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone`, `birthdate`, `cpf`, `validated`, `type_user`, `created_at`, `update_at`) VALUES
+(81, 'Usuario Teste', 'usuarioteste@gmail.com', '$2y$10$e2mVn1oyy7hrfWAwrRjiFeCtlupuskA3sBY4ZqGrMNL8w/VFiCl9S', '88888888888', '2000-09-05', 04294967295, 0, 2, '2023-11-28 21:42:23', '2023-11-29 17:12:13');
 
 -- --------------------------------------------------------
 
@@ -198,7 +261,14 @@ CREATE TABLE `vehicles` (
   `details` varchar(100) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Despejando dados para a tabela `vehicles`
+--
+
+INSERT INTO `vehicles` (`id`, `vehicle_type_id`, `driver_id`, `plate_number`, `brand`, `model`, `color`, `manufacture_year`, `details`, `created_at`, `updated_at`) VALUES
+(10, 2, 24, 'OYO-1500', 'Ford', 'Fiesta', '#d01616', 2012, 'Nenhum', '2023-11-29 12:20:26', '2023-11-29 12:20:26');
 
 -- --------------------------------------------------------
 
@@ -216,7 +286,7 @@ CREATE TABLE `vehicle_types` (
   `max_weight` decimal(10,2) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Despejando dados para a tabela `vehicle_types`
@@ -235,6 +305,12 @@ INSERT INTO `vehicle_types` (`id`, `type_name`, `description`, `image_path`, `ba
 -- Índices de tabela `adresses`
 --
 ALTER TABLE `adresses`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `banking_info`
+--
+ALTER TABLE `banking_info`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -300,10 +376,16 @@ ALTER TABLE `adresses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
+-- AUTO_INCREMENT de tabela `banking_info`
+--
+ALTER TABLE `banking_info`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de tabela `deliveries`
 --
 ALTER TABLE `deliveries`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT de tabela `delivery_status`
@@ -315,31 +397,31 @@ ALTER TABLE `delivery_status`
 -- AUTO_INCREMENT de tabela `drivers`
 --
 ALTER TABLE `drivers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de tabela `payment_cards`
 --
 ALTER TABLE `payment_cards`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `ratings`
 --
 ALTER TABLE `ratings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT de tabela `vehicles`
 --
 ALTER TABLE `vehicles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `vehicle_types`
