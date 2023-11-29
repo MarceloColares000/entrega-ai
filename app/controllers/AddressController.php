@@ -107,7 +107,7 @@ class AddressController
             // Verifica se o endereço pertence ao usuario
             $isUserAddress = $addressDAO->getByConditions("user_id = $user_id AND id = $id");
 
-            if($isUserCard){
+            if($isUserAddress){
 
                 if ($address) {
                 
