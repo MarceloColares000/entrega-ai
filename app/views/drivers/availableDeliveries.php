@@ -142,17 +142,9 @@
                                                                 <?php }else{ ?>
                                                                 <form action="<?= BASE_URL ?>motorista/acceptDelivery" onsubmit="return confirm('Você tem certeza que quer aceitar essa encomenda?')" method="post">
                                                                     <select class="form-control mt-4 mb-4" required name="vehicle_id" id="vehicle_id">
-                                                                        <?php foreach($vehicles as $vehicle){ ?>
-                                                                        <?php if($vehicle->getVehicle_type_id() === $deliveries->getVehicle_type_id()){ ?>
-                                                                            <option value="<?= $vehicle->getId(); ?>"><?= $vehicle->getBrand() ?> <?= $vehicle->getModel() ?>, <?= $vehicle->getPlate_number() ?></option>
-                                                                        <?php } else{ ?>
-                                                                            
-                                                                        <?php } ?>
-                                                                        
-                                                                    <?php } ?>
                                                                         <option value="">Selecione</option>
                                                                         <?php foreach($vehicles as $vehicle){ ?>
-                                                                            
+                                                                            <option value="<?= $vehicle->getId(); ?>"><?= $vehicle->getBrand() ?> <?= $vehicle->getModel() ?>, <?= $vehicle->getPlate_number() ?></option>
                                                                         <?php } ?>
                                                                     </select>
                                                                         <input type="hidden" name="delivery_id" id="delivery_id" value="<?= $delivery->getDelivery_id(); ?>">
