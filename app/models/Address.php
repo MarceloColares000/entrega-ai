@@ -15,18 +15,6 @@ class Address
     private ?string $created_at = null;
     private ?string $updated_at = null;
 
-    public function toArrayGet() {
-        // Retorna um array associativo com os dados do usuário
-        return [
-            'user_id' => $this->getUser_Id($user_id),
-            'description' => $this->getDescription(),
-            'latitude' => $this->getLatitude(),
-            'longitude' => $this->getLongitude(),
-            'addressDetails' => $this->getAddressDetails(),
-            'number' => $this->getNumber(),
-        ];
-    }
-
     // Métodos getters e setters para cada propriedade
 
     public function getId()

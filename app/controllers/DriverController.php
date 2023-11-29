@@ -60,13 +60,37 @@ class DriverController
             Helpers::redirect('motorista/login');
         }
         
-        $title = "O login funcionou";
+        $title = "Página inicial | Entrega aí";
         $data = [
             'title' => $title,
             'menuDinamic' => '/dashboard'
         ];
 
         View::render('drivers/home', $data, 'default');
+        
+    }
+
+    public function renderMyProfile()
+    {
+        // Verificar se o motorista já está autenticado
+        if (!isset($_SESSION['driver_id'])) 
+        {
+            Helpers::redirect('motorista/login');
+        }
+
+        // Verificar se o usuário  já está autenticado
+        if (isset($_SESSION['user_id'])) 
+        {
+            Helpers::redirect('usuario/dashboard');
+        }
+
+        $title = "Meus dados | Entrega aí";
+        $data = [
+            'title' => $title,
+            'menuDinamic' => '/meus-dados'
+        ];
+
+        View::render('drivers/profile', $data, 'default');
         
     }
 
@@ -90,12 +114,14 @@ class DriverController
             Helpers::redirect('motorista/cadastrar');
         }
 
+        $cleanedCPF = preg_replace('/[^0-9]/', '', $_POST['cpf']);
+
         $driver = new Driver();
         $driver->setName($_POST['name']);
         $driver->setEmail($_POST['email']);
         $phone = preg_replace('/[^0-9]/', '', $_POST['phone']);
         $driver->setPhone($phone);
-        $driver->setCpf($_POST['cpf']);
+        $driver->setCpf($cleanedCPF);
         $driver->setLicence($_POST['licence']);
         $driver->setBirthdate($_POST['birthdate']);
 
@@ -111,15 +137,7 @@ class DriverController
         }
 
         // Chama o método insert do DriverDAO
-        $insertedDriverId = $driverDAO->insert([
-            'name' => $driver->getName(),
-            'email' => $driver->getEmail(),
-            'phone' => $driver->getPhone(),
-            'birthdate' => $driver->getBirthdate(),
-            'cpf' => $driver->getCpf(),
-            'licence' => $driver->getLicence(),
-            'password' => $driver->getPassword()
-        ]);
+        $insertedDriverId = $driverDAO->insert($driver);
 
         if ($insertedDriverId > 0) {
             $driver = $driverDAO->getById($insertedDriverId);
@@ -127,6 +145,10 @@ class DriverController
             // Define as variáveis de sessão
             $_SESSION['driver_id'] = $driver->getId();
             $_SESSION['driver_name'] = $driver->getName();
+            $_SESSION['driver_email'] = $driver->getEmail();
+            $_SESSION['driver_phone'] = $driver->getPhone();
+            $_SESSION['driver_cpf'] = $driver->getCpf();
+            $_SESSION['driver_birthdate'] = $driver->getBirthdate();
             $_SESSION['first_name'] = Helpers::getFirstName($_SESSION['driver_name']);
 
             $_SESSION['msg'] = Message::success("Olá, seja bem-vindo(a)");
@@ -159,9 +181,11 @@ class DriverController
             if ($driverData !== false) {
                 $_SESSION['driver_id'] = $driverData->getId();
                 $_SESSION['driver_name'] = $driverData->getName();
-                $firstName = strtok($_SESSION['driver_name'],' ');
-                $_SESSION['first_name'] = $firstName;
-                $_SESSION['msg'] = Message::success("Oi! Seja bem-vindo(a), !");
+                $_SESSION['driver_email'] = $driverData->getEmail();
+                $_SESSION['driver_phone'] = $driverData->getPhone();
+                $_SESSION['driver_cpf'] = $driverData->getCpf();
+                $_SESSION['driver_birthdate'] = $driverData->getBirthdate();
+                $_SESSION['first_name'] = Helpers::getFirstName($_SESSION['driver_name']);
                 Helpers::redirect('motorista/dashboard');
             } else {
                 $_SESSION['msg'] = Message::error("E-mail ou senha incorretos. Tente novamente.");
@@ -174,13 +198,6 @@ class DriverController
     public function updateDriver()
     {   
 
-        // Verifica se os campos obrigatórios estão preenchidos
-        $campos = ['name', 'phone', 'cpf', 'licence', 'birthdate'];
-
-        if (!Helpers::checkEmptyFields($campos)) {
-            $_SESSION['msg'] = Message::error("Preencha todos os campos!");
-            Helpers::redirect('motorista/meus-dados');
-        }
 
         $id = $_SESSION['driver_id'];
         $driver = new Driver();
@@ -191,25 +208,18 @@ class DriverController
 
         $driverDAO = new DriverDAO($driver);
 
-        $data = array(
-            'name' => $user->getName(),
-            'phone' => $user->getPhone(),
-            'birthdate' => $user->getBirthdate()
-        );
+        $updatedUser = $driverDAO->update($driver, "id = {$id}");
 
-        $driverDAO->update($data, $id);
-        if ($driverDAO !== false) {
+        if ($updatedUser) {
 
-            $user = $userDAO->getById($_SESSION['user_id']);
+            $driver = $driverDAO->getById($_SESSION['driver_id']);
 
             // Define as variáveis de sessão
-            $_SESSION['user_name'] = $user->getName();
-            $_SESSION['user_email'] = $user->getEmail();
-            $_SESSION['user_phone'] = $user->getPhone();
-            $_SESSION['user_birthdate'] = $user->getBirthdate();
-            $firstName = strtok($_SESSION['user_name'],' ');
-            $_SESSION['first_name'] = $firstName;
-
+            $_SESSION['driver_name'] = $driver->getName();
+            $_SESSION['driver_email'] = $driver->getEmail();
+            $_SESSION['driver_phone'] = $driver->getPhone();
+            $_SESSION['driver_birthdate'] = $driver->getBirthdate();
+            $_SESSION['first_name'] = Helpers::getFirstName($_SESSION['driver_name']);
             $_SESSION['msg'] = Message::success("O motorista foi atualizado!");
             Helpers::redirect('motorista/meus-dados');
         } else {
@@ -219,9 +229,50 @@ class DriverController
 
     }
 
+    // Deletar o usuário
+    public function deleteDriver()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            Helpers::redirect('');
+        }
+
+        // Verifica se existe o ID e se ele é um inteiro
+        $id = isset($_POST['driver_id']) ? (int)$_POST['driver_id'] : null;
+
+        // Recupera o ID do usuário logado
+        $driverIdLogged = isset($_SESSION['driver_id']) ? (int)$_SESSION['driver_id'] : null;
+
+        // Verifica se o ID existe e se é igual ao ID do usuário logado
+        if ($id && $id === $driverIdLogged) {
+            
+            $driverDAO = new DriverDAO();
+            $driver = $driverDAO->getById($id);
+
+            if ($driver) {
+            
+                $deleted = $driverDAO->delete($id);
+
+                session_destroy();
+                Helpers::redirect('');
+
+            } else {
+                $_SESSION['msg'] = Message::warning("Erro ao tentar excluir sua conta. O usuário não foi encontrado.");
+                Helpers::redirect('motorista/meus-dados');
+            }
+        
+        } else {
+            $_SESSION['msg'] = Message::error("Erro ao tentar excluir sua conta. Operação não permitida.");
+            Helpers::redirect('motorista/meus-dados');
+        }
+
+    }
+
     public static function logoutDriver()
     {
-        session_destroy();
+        if (session_status() !== PHP_SESSION_NONE) {
+            // Destroi a sessão
+            session_destroy();
+        }
         Helpers::redirect('');
     }
 

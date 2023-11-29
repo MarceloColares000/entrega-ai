@@ -1131,6 +1131,7 @@ section.WelcomeArea {
 
 .space-area {
     padding: 1rem!important;
+    text-align: justify;
 }
 .font-weight-bold {
     font-weight: 700!important;

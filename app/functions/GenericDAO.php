@@ -3,6 +3,7 @@
 namespace App\Functions;
 
 use App\Functions\Database;
+use PDO;
 
 class GenericDAO
 {
@@ -72,6 +73,8 @@ class GenericDAO
     }
 
     // Selecionar um registro por ID
+
+   
     public function getById($id)
     {
         $sql = "SELECT * FROM " . $this->table . " WHERE id = :id LIMIT 1";
@@ -88,6 +91,37 @@ class GenericDAO
             return null; 
         }
     }
+    
+     /*
+    public function getById(int $id)
+    {   
+        $db = Database::getConnection();
+        try {
+            $sql = "SELECT * FROM " . $this->table . " WHERE id = :id";
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_CLASS, $this->entityClass);
+        } catch (PDOException $ex) {
+            $this->exception = $ex;
+            $this->message = $ex->getMessage();
+            return null;
+        }
+    }
+    */
+
+    // Selecionar um registro por ID
+    public function getByDeliveryId($delivery_id)
+    {
+        $sql = "SELECT * FROM " . $this->table . " WHERE delivery_id = :delivery_id LIMIT 1";
+
+        $params = [
+            'delivery_id' => $delivery_id
+        ];
+
+        return $this->executeQuery($sql, $params);
+        
+    }
 
     // Selecionar os registros com condicições
     public function getByConditions($conditions)
@@ -100,6 +134,22 @@ class GenericDAO
         } else {
         
             return [];
+        }
+    }
+
+    public function getByRestrictions(string $restrictions)
+    {
+        try {
+            $table = $this->validationTable($tableParam);
+
+            $sql = "SELECT * FROM $table WHERE $restrictions";
+            $stmt = DB::prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $ex) {
+            $this->exception = $ex;
+            $this->message = $ex->getMessage();
+            return null;
         }
     }
 
@@ -159,7 +209,7 @@ class GenericDAO
     }
     
     // Insere registros
-    public function insert(array $data)
+    /*public function insert(array $data)
     {
         // Pega os nomes válidos das colunas da tabela
         $validColumns = $this->getTableColumns();
@@ -188,11 +238,31 @@ class GenericDAO
 
         // Retorna o último ID inserido
         return Database::getConnection()->lastInsertId();
+    }*/
+
+    public function insert(object $object)
+    {
+        $db = Database::getConnection();
+        try {
+            $params = $this->validationInsert($object);
+            $columns = implode(", ", array_keys($params));
+            $values = ":" . implode(", :", array_keys($params));
+
+            $sql = "INSERT INTO " . $this->table . " ($columns) "
+                    . "VALUES($values)";
+
+            $stmt = $db->prepare($sql);
+            $stmt->execute($this->filter($params));
+            return $this->lastInsertId();
+        } catch (PDOException $ex) {
+            $this->exception = $ex;
+            $this->message = $ex->getMessage();
+            return null;
+        }
     }
 
-
     // Atualiza registro
-    public function update(array $data, $id)
+    /*public function update(array $data, $id)
     {
         // Obter os nomes válidos das colunas da tabela
         $validColumns = $this->getTableColumns();
@@ -218,6 +288,31 @@ class GenericDAO
         } else {
             return null;
         }
+    }*/
+    
+    public function update(object $object, string $restriction)
+    {
+        
+        $db = Database::getConnection();
+        
+        try {
+            $params = $this->validationUpdate($object);
+            $arraySet = [];
+            foreach ($params as $bind => $value) {
+                $arraySet[] = "$bind = :$bind";
+            }
+            $arraySet = implode(", ", $arraySet);
+
+            $sql = "UPDATE " . $this->table . " SET $arraySet WHERE $restriction";
+
+            $stmt = $db->prepare($sql);
+            $stmt->execute($params);
+            return ($stmt->rowCount() ?: 1);
+        } catch (PDOException $ex) {
+            $this->exception = $ex;
+            $this->message = $ex->getMessage();
+            return null;
+        }
     }
 
     // Deletar um registro
@@ -230,5 +325,73 @@ class GenericDAO
         ];
 
         return $this->executeQuery($sql, $params);
+    }
+
+    protected function filter(array $data): ?array
+    {
+        $filter = [];
+        foreach ($data as $key => $value) {
+            $filter[$key] = (is_null($value) ? null : filter_var($value, FILTER_SANITIZE_SPECIAL_CHARS));
+        }
+        return $filter;
+    }
+    
+    private function validationInsert(object $object): array
+    {
+        $params = [];
+        $methods = get_class_methods(get_class($object));
+
+        foreach ($methods as $value) {
+            if (preg_match("/^set/", $value)) {
+                $nameProperty = lcfirst(str_replace("set", "", $value));
+                $nameMethod = "get{$nameProperty}";
+                $value = $object->$nameMethod();
+
+                if ($value !== null && $value !== '') {
+                    $params[$nameProperty] = $value;
+                }
+            }
+        }
+
+        return $params;
+    }
+    
+    private function validationUpdate(object $object): array
+    {
+        $params = [];
+        $methods = get_class_methods(get_class($object));
+
+        foreach ($methods as $value) {
+            if (preg_match("/^set/", $value)) {
+                $nameProperty = lcfirst(str_replace("set", "", $value));
+                $nameMethod = "get$nameProperty";
+                $value = $object->$nameMethod();
+
+                if ($value !== null) {
+                    $params[$nameProperty] = $value;
+                }
+            }
+        }
+
+        return $params;
+    }
+
+    public function lastInsertId(): int
+    {
+        $db = Database::getConnection();
+        return $db->lastInsertId();
+    }
+
+    public function lastId(string $tableParam = ""): ?int
+    {
+        try {
+            $table = $this->validationTable($tableParam);
+
+            return DB::getInstance()->query("SELECT MAX(id) as maxId FROM $table")->fetch()->maxId + 1;
+        } catch (PDOException $ex) {
+            $this->exception = $ex;
+            $this->message = $ex->getMessage();
+            return null;
+        }
     }
 }

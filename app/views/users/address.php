@@ -1,60 +1,58 @@
 <?php include_once __DIR__ . '/../includes/menu.php'; ?>
-
-      <div class="container">
-         <div class="row justify-content-center">
-            <div class="col-xl-12 col-lg-12 col-md-9">
-               <div class="card o-hidden border-0 my-5">
-                  <div class="card-body p-0">
-                     <div class="row">
-                        <div class="col-lg-12">
-                           <div class="p-3 mb-4 ">
-                              <div class="d-sm-flex align-items-center justify-content-between">
-                                 <h1 class="h3 mb-4 text-gray-800"><i class="fa fa-map-marker"></i> Meus endereços</h1>
-                                 <a class=" site-btn-secondary site-btn" data-toggle="modal" data-target="#addAddressModal"><i class="fas fa-fw fa-plus"></i> Adicionar novo</a>
-                              </div>
-                              <div class="mb-4 mt-4">
-                                 <?= SessionMessage(); ?>
-                              </div>
-                              <div class="text-center">
-                                  <?php if (empty($adresses)) { ?>
-                                      <div class="text-center">
-                                          <img src="<?= IMG ?>/no_data.svg" style="width: 15%;" class="img-fluid">
-                                          <p class="mt-4 mb-4">Você ainda não cadastrou nenhum endereço!</p>
-                                      </div>
-                                  <?php } else { ?>
-                                      <div class="container">
-                                          <div class="row">
-                                              <?php foreach ($adresses as $address) { ?>
-                                                  <div class="address-area mt-3 mb-3 col-md-6">
-                                                      <div class="space-area shadow-sm">
-                                                          <div class="d-flex align-items-center mb-3">
-                                                              <p class="py-1 px-2 mb-0 text-center">
-                                                                  <i class="fa fa-map-marker" aria-hidden="true"></i> <?= $address->getAddressDetails() . ", " . $address->getNumber(); ?>
-                                                              </p>
-                                                              <p class="text-muted ml-auto mb-0">
-                                                                  <form action="<?= BASE_URL ?>usuario/enderecos/delete" method="post" onsubmit="confirm('Você tem certeza que quer apagar esse endereço?')">
-                                                                      <input type="hidden" name="id" id="id" value="<?= $address->getId(); ?>">
-                                                                      <button type="submit" class="site-btn-danger site-btn">
-                                                                          <i class="fa fa-trash" aria-hidden="true"></i> Apagar
-                                                                      </button>
-                                                                  </form>
-                                                              </p>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              <?php } ?>
-                                          </div>
-                                      </div>
-                                  <?php } ?>
-                              </div>
-                           </div>
+    
+    <div class="container">
+        <div class="view-account">
+           <section class="module">
+              <div class="module-inner">
+                 <?php include_once __DIR__ . '/../includes/sideMenu.php'; ?>
+                <div class="content-panel">
+                    <div class="d-sm-flex align-items-center justify-content-between">
+                        <h1 class="h3 mb-4 text-gray-800"><i class="fa fa-map-marker"></i> Meus endereços</h1>
+                        <a class=" site-btn-secondary site-btn" data-toggle="modal" data-target="#addAddressModal"><i class="fas fa-fw fa-plus"></i> Adicionar novo</a>
+                    </div>
+                    <div class="mb-4 mt-4">
+                       <?= SessionMessage(); ?>
+                    </div>
+                    <div class="container">
+                        <?php if (empty($adresses)) { ?>
+                        <div class="text-center">
+                            <img src="<?= IMG ?>/no_data.svg" style="width: 15%;" class="img-fluid">
+                            <p class="mt-4 mb-4">Você ainda não cadastrou nenhum endereço!</p>
                         </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
+                        <?php } else { ?>
+                        <div class="row">
+                            <?php foreach ($adresses as $address) { ?>
+                                <div class="col-md-6 mb-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <p class="mb-0">
+                                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                        <span class="ml-2"><?= $address->getAddressDetails() . ", " . $address->getNumber(); ?></span>
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <form action="<?= BASE_URL ?>usuario/enderecos/delete" method="post" onsubmit="return confirm('Você tem certeza que quer apagar esse endereço?')">
+                                                        <input type="hidden" name="id" value="<?= $address->getId(); ?>">
+                                                        <button type="submit" class="btn btn-danger btn-sm" title="Apagar Endereço">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
+           </section>
+        </div>
+    </div>
 
       <!-- addAddressModal -->
       <div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -83,10 +81,7 @@
                            <input type="text" class="form-control form-control-user" name="description" id="description" placeholder="Ex: Meu trabalho; Minha casa, etc..." required>
                         </div>
                         <div class="modal-footer modal-footer-address">
-                           <button class="site-btn-danger" onclick="clearMap()">
-                              <i class="fa fa-times" aria-hidden="true"></i> Limpar Mapa
-                           </button>
-                           <button type="submit" class="site-btn">
+                            <button type="submit" class="site-btn">
                               <i class="fa fa-save" aria-hidden="true"></i> Cadastrar
                            </button>
                         </div>
@@ -171,8 +166,6 @@
              });
          }
 
-
-
           function getUserLocation() {
               // Obtém a localização do usuário usando a geolocalização do navegador.
               if (navigator.geolocation) {
@@ -206,18 +199,6 @@
               } else {
                   alert("Seu navegador não suporta geolocalização.");
               }
-          }
-
-          function clearMap() {
-              // Remove os marcadores existentes (se houverem)
-              if (userMarker) {
-                  userMarker.setMap(null);
-              }
-
-              originLatLng = null;
-              document.getElementById('origin').textContent = 'Clique no mapa para definir';
-              document.getElementById('latitude').value = '';
-              document.getElementById('longitude').value = '';
           }
 
       </script>

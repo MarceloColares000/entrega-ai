@@ -9,35 +9,26 @@ class User
     private ?string $name = null;
     private ?string $email = null;
     private string $phone;
-    private ?string $cpf = null;
+    private ?int $cpf = null;
     private ?string $password = null;
     private string $birthdate;
-    private ?string $validated = null;
-    private ?int $type_user = null;
+    private ?int $validated = null;
     private ?string $created_at = null;
     private ?string $updated_at = null;
 
 
-    public function toArrayGet()
+    public static function fromArray(array $data): User
     {
-        $data = [
-            'name' => $this->getName(),
-            'email' => $this->getEmail(),
-            'phone' => $this->getPhone(),
-            'cpf' => $this->getCpf(),
-            'birthdate' => $this->getBirthdate(),
-            'password' => $this->getPassword(), // Incluído se não estiver vazio
-        ];
-
-        // Filtra os campos que não estão vazios
-        $filteredData = array_filter($data, function ($value) {
-            return $value !== '' && $value !== null;
-        });
-
-        return $filteredData;
+        $user = new self();
+        foreach ($data as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (method_exists($user, $method)) {
+                $user->$method($value);
+            }
+        }
+        return $user;
     }
 
-    
     // Métodos getters e setters para cada propriedade
     public function getId()
     {
@@ -117,14 +108,6 @@ class User
     public function setValidated($validated)
     {
         $this->validated = $validated;
-    }
-
-    public function getTypeUser(): int {
-        return $this->type_user;
-    }
-
-    public function setTypeUser(int $type_user): void {
-        $this->type_user = $type_user;
     }
     
     public function getCreated_at()

@@ -5,15 +5,15 @@ namespace App\Models;
 class Driver
 {
     private ?int $id = null;
-    private string $name;
-    private string $email;
-    private string $password;
-    private string $phone;
-    private string $cpf;
-    private string $licence;
-    private string $birthdate;
+    private ?string $name = null;
+    private ?string $email = null;
+    private ?string $password = null;
+    private ?int $phone = null;
+    private ?int $cpf = null;
+    private ?int $licence = null;
+    private ?string $birthdate = null;
     private ?string $validated = null;
-    private int $type_user;
+    private ?int $type_user = null;
     private ?string $created_at = null;
     private ?string $updated_at = null;
 
@@ -69,15 +69,16 @@ class Driver
         $this->phone = $phone;
     }
 
-    public function getCpf(): string
-    {
-        return $this->cpf;
-    }
+    public function getCpf(): int
+{
+    return $this->cpf;
+}
 
-    public function setCpf(string $cpf): void
-    {
-        $this->cpf = $cpf;
-    }
+public function setCpf(int $cpf): void
+{
+    $this->cpf = $cpf;
+}
+
 
     public function getLicence(): string
     {
@@ -107,14 +108,6 @@ class Driver
     public function setValidated(?string $validated): void
     {
         $this->validated = $validated;
-    }
-
-    public function getTypeUser(): int {
-        return $this->type_user;
-    }
-
-    public function setTypeUser(int $type_user): void {
-        $this->type_user = $type_user;
     }
 
     public function getCreatedAt(): ?string

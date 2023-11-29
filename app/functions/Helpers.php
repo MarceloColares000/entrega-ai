@@ -3,6 +3,7 @@
 namespace App\Functions;
 
 use DateTime;
+use App\Models\DAO\DeliveryDAO;
 
 class Helpers
 {
@@ -95,4 +96,29 @@ class Helpers
 	    }
 	    return true;
 	}
+
+	// Função que gera ID do delivery
+	public static function generateUniqueRandomString($length = 13)
+        {
+            $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $randomString = '';
+            $deliveryDAO = new DeliveryDAO();
+
+            while (true) {
+                $randomString = '';
+
+                for ($i = 0; $i < $length; $i++) {
+                    $randomString .= $characters[rand(0, strlen($characters) - 1)];
+                }
+
+                $existingDelivery = $deliveryDAO->getByConditions("delivery_id = '$randomString'");
+
+                if (empty($existingDelivery)) {
+                    break;
+                }
+            }
+
+            return "BR" .$randomString . "AI";
+    }
+
 }

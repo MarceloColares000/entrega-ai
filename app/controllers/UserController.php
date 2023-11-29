@@ -66,7 +66,7 @@ class UserController
         if (isset($_SESSION['driver_id'])) 
         {
             Helpers::redirect('motorista/dashboard');
-        }
+        } 
 
         $title = "Página inicial | Entrega aí";
         $data = [
@@ -99,6 +99,30 @@ class UserController
         ];
 
         View::render('users/profile', $data, 'default');
+        
+    }
+
+    public function renderUpdatePassword()
+    {
+        // Verificar se o usuário já está autenticado
+        if (!isset($_SESSION['user_id'])) 
+        {
+            Helpers::redirect('usuario/login');
+        }
+
+        // Verificar se o motorista já está autenticado
+        if (isset($_SESSION['driver_id'])) 
+        {
+            Helpers::redirect('motorista/dashboard');
+        }
+
+        $title = "Mudar senha | Entrega aí";
+        $data = [
+            'title' => $title,
+            'menuDinamic' => '/mudar-senha'
+        ];
+
+        View::render('users/change-password', $data, 'default');
         
     }
 
@@ -145,7 +169,7 @@ class UserController
         }
 
         // Tenta inserir o usuário no banco de dados
-        $insertedUserId = $userDAO->insert($user->toArrayGet());
+        $insertedUserId = $userDAO->insert($user);
 
         if ($insertedUserId > 0) {
 
@@ -154,8 +178,10 @@ class UserController
             // Define as variáveis de sessão
             $_SESSION['user_id'] = $user->getId();
             $_SESSION['user_name'] = $user->getName();
+            $_SESSION['user_cpf'] = $user->getCpf();
             $_SESSION['user_email'] = $user->getEmail();
             $_SESSION['user_phone'] = $user->getPhone();
+            $_SESSION['user_cpf'] = $user->getCpf();
             $_SESSION['user_birthdate'] = $user->getBirthdate();
             $_SESSION['first_name'] = Helpers::getFirstName($_SESSION['user_name']);
 
@@ -191,6 +217,7 @@ class UserController
             $_SESSION['user_name'] = $userData->getName();
             $_SESSION['user_email'] = $userData->getEmail();
             $_SESSION['user_phone'] = $userData->getPhone();
+            $_SESSION['user_cpf'] = $userData->getCpf();
             $_SESSION['user_birthdate'] = $userData->getBirthdate();
             $_SESSION['first_name'] = Helpers::getFirstName($_SESSION['user_name']);
 
@@ -218,6 +245,14 @@ class UserController
             Helpers::redirect('usuario/meus-dados');
         }
 
+        // Verifica se o CPF informado é válido
+        $cleanedCPF = preg_replace('/[^0-9]/', '', $_POST['cpf']);
+
+        if (!Helpers::checkCPF($cleanedCPF)) {
+            $_SESSION['msg'] = Message::error("CPF inválido.");
+            Helpers::redirect('usuario/meus-dados');
+        }
+
         // Limpeza e validação dos dados
         $name = $_POST['name'];
         $phone = preg_replace('/[^0-9]/', '', $_POST['phone']);
@@ -226,24 +261,20 @@ class UserController
         $user = new User();
         $user->setName($name);
         $user->setPhone($phone);
+        $user->setCpf($cleanedCPF);
         $user->setBirthdate($birthdate);
 
         $userDAO = new UserDAO();
 
-        $data = $user->toArrayGet();
-
         // Atualização do usuário
-        $userDAO->update($data, $userId);
-
-        // Verificação do sucesso da atualização
-        $updatedUser = $userDAO->getById($userId);
+        $updatedUser = $userDAO->update($user, "id = {$userId}");
 
         if ($updatedUser) {
             // Atualiza a sessão com os novos dados do usuário
-            $_SESSION['user_name'] = $updatedUser->getName();
-            $_SESSION['user_email'] = $updatedUser->getEmail();
-            $_SESSION['user_phone'] = $updatedUser->getPhone();
-            $_SESSION['user_birthdate'] = $updatedUser->getBirthdate();
+            $_SESSION['user_name'] = $user->getName();
+            $_SESSION['user_phone'] = $user->getPhone();
+            $_SESSION['user_cpf'] = $user->getCpf();
+            $_SESSION['user_birthdate'] = $user->getBirthdate();
             $_SESSION['first_name'] = Helpers::getFirstName($_SESSION['user_name']);
 
             // Resposta em JSON para solicitações AJAX
@@ -259,6 +290,58 @@ class UserController
         header('Content-Type: application/json');
         echo json_encode($response);
     }
+
+    // Atualizar senha
+    public function updatePassword()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            Helpers::redirect('usuario/mudar-senha');
+        }
+
+        $requiredFields = ['oldPassword', 'password', 'repeatPassword'];
+
+        if (!Helpers::checkEmptyFields($requiredFields)) {
+            $_SESSION['msg'] = Message::error("Preencha todos os campos!");
+            Helpers::redirect('usuario/mudar-senha');
+        }
+
+        if ($_POST['password'] != $_POST['repeatPassword']) {
+            $_SESSION['msg'] = Message::error("Senhas não são iguais!");
+            Helpers::redirect('usuario/mudar-senha');
+        }
+
+        $user_id = $_SESSION['user_id'];
+        $userDAO = new UserDAO();
+        $users = $userDAO->getByConditions("id = $user_id");
+
+        $oldPasswordForm = $_POST['oldPassword'];
+
+        foreach ($users as $user) {
+            // Verifica se a senha antiga fornecida pelo usuário corresponde à senha no banco de dados
+            if (!password_verify($oldPasswordForm, $user->getPassword())) {
+                $_SESSION['msg'] = Message::error("Senha antiga incorreta!");
+                Helpers::redirect('usuario/mudar-senha');
+            }
+
+            // Define a nova senha
+            $user->setPassword(Helpers::getHashPassword($_POST['password']));
+
+            $data = $user->toArrayGet();
+
+            // Tenta atualizar a senha no banco de dados
+            $updatePassword = $userDAO->update($data, $user_id);
+
+            if ($updatePassword) {
+                $_SESSION['msg'] = Message::success("Senha atualizada com sucesso!");
+                Helpers::redirect('usuario/dashboard');
+            } else {
+                $_SESSION['msg'] = Message::error("Erro ao atualizar a senha. Tente novamente!");
+                Helpers::redirect('usuario/mudar-senha');
+            }
+        }
+
+    }
+
 
     // Deletar o usuário
     public function deleteUser()

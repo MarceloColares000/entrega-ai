@@ -72,7 +72,7 @@ class AddressController
         $addressDAO = new AddressDAO();
 
         // Tenta inserir o usuário no banco de dados
-        $insertedAddressId = $addressDAO->insert($address->toArrayGet());
+        $insertedAddressId = $addressDAO->insert($address);
 
         if ($insertedAddressId > 0) {
 
@@ -97,21 +97,32 @@ class AddressController
 
         // Verifica se existe o ID e se ele é um inteiro
         $id = isset($_POST['id']) ? (int)$_POST['id'] : null;
+        $user_id = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : null;
 
         if ($id) {
             
             $addressDAO = new AddressDAO();
             $address = $addressDAO->getById($id);
 
-            if ($address) {
-            
-                $deleted = $addressDAO->delete($id);
+            // Verifica se o endereço pertence ao usuario
+            $isUserAddress = $addressDAO->getByConditions("user_id = $user_id AND id = $id");
 
-                $_SESSION['msg'] = Message::success("Endereço excluído com sucesso!");
-                Helpers::redirect('usuario/enderecos');
+            if($isUserCard){
+
+                if ($address) {
+                
+                    $deleted = $addressDAO->delete($id);
+
+                    $_SESSION['msg'] = Message::success("Endereço excluído com sucesso!");
+                    Helpers::redirect('usuario/enderecos');
+
+                } else {
+                    $_SESSION['msg'] = Message::warning("Erro ao tentar excluir seu endereço. Tente novamente.");
+                    Helpers::redirect('usuario/enderecos');
+                }
 
             } else {
-                $_SESSION['msg'] = Message::warning("Erro ao tentar excluir seu endereço. Tente novamente.");
+                $_SESSION['msg'] = Message::error("Erro ao apagar o endereço. Tente novamente!");
                 Helpers::redirect('usuario/enderecos');
             }
         

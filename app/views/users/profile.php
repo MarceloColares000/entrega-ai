@@ -2,19 +2,15 @@
       
       
       <div class="container">
-         <div class="col-lg-12">
-            <div class="p-3 mb-4 mt-4">
-               <div class="d-sm-flex align-items-center justify-content-between">
-                  <h1 class="h3 mb-4 text-gray-800">Oi, <?= $_SESSION['first_name']; ?>! 😊</h1>
-               </div>
-            </div>
-         </div>
          <div class="view-account">
             <section class="module">
                <div class="module-inner">
                   <?php include_once __DIR__ . '/../includes/sideMenu.php'; ?>
                   <div class="content-panel">
                      <h2 class="title">Meus dados</h2>
+                     <div class="mb-4 mt-4">
+                        <?= SessionMessage(); ?>
+                     </div>
                      <div class="billing">
                         <form action="<?= BASE_URL ?>usuario/update" method="post" id="user-form-edit">
                            <div class="form-group">
@@ -29,6 +25,12 @@
                               <div class="col-sm-6">
                                  <label class="control-label" for="birthdate">Data de nascimento:</label>
                                  <input type="date" max="9999-12-31" class="styles__Field-tg3uj4-1 gXNzQk" name="birthdate" id="birthdate" placeholder="Data de nascimento" value="<?= $_SESSION['user_birthdate'] ?>" required>
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                              <div class="col-sm-6 mb-3 mb-sm-0">
+                                 <label class="control-label" for="cpf">Cpf:</label>
+                                 <input type="text" class="styles__Field-tg3uj4-1 gXNzQk" onkeydown="javascript: fMasc(this, mCPF);" maxlength="14" name="cpf" id="cpf" placeholder="Telefone (XX) XXXXX-XXXX" value="<?= $_SESSION['user_cpf'] ?>" required >
                               </div>
                            </div>
                            <div class="form-group">

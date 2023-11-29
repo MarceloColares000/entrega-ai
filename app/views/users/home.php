@@ -20,7 +20,7 @@
                                   </button>
                                   <div class="collapse  col-lg-6 text-center" style="margin: auto; margin-top: 20px;" id="collapseRastreio">
                                       <div class="card-body">
-                                        <form class="user" action="<?= BASE_URL ?>usuario/rastreio" method="post" id="searchForm">
+                                        <form class="user" action="<?= BASE_URL ?>usuario/rastrear" method="post" id="searchForm">
                                            <div class="form-group">
                                              <input type="text" class="form-control form-control-user" name="deliveryId" id="deliveryId" placeholder="Código de rastreio" value="<?= (isset($deliveryId) ? $deliveryId : ""); ?>" 
                                       aria-label="Search" aria-describedby="basic-addon2" required>
@@ -48,7 +48,7 @@
               event.preventDefault();
               
               var deliveryId = document.getElementById("deliveryId").value;
-              window.location.href = "<?= BASE_URL; ?>usuario/rastreio/" + encodeURIComponent(deliveryId);
+              window.location.href = "<?= BASE_URL; ?>usuario/rastrear/delivery/" + encodeURIComponent(deliveryId);
           });
       </script>
 

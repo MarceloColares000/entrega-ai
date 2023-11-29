@@ -556,3 +556,26 @@ form.user .btn-user {
     height: 800px;
     width: 100%;
 }
+
+/* Avaliações */
+
+.stars input[type=radio] {
+    display: none;
+}
+
+.stars label i.opcao.fa:before {
+    content: '\f005';
+    color: #ffcc00;
+}
+
+.stars input[type=radio]:checked~label i.fa:before {
+    color: #cccccc;
+}
+
+.filled-star {
+    color: #ffcc00;
+}
+
+.empty-star{
+    color: #cccccc;
+}
