@@ -106,7 +106,7 @@
                                                     </div>
                                                     <div class="col-md-6 mb-3">
                                                         <h5>Distância</h5>
-                                                        <p class="text-muted"><?= $delivery->getTotal_km(); ?> Km</p>
+                                                        <p class="text-muted"><?= $delivery->getTotal_km(); ?></p>
                                                     </div>
                                                     <div class="col-md-6 mb-3">
                                                         <h5>Forma de Pagamento</h5>

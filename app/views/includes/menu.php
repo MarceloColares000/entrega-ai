@@ -224,12 +224,6 @@
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li class="<?= ($menuDinamic == "/" ? "active" : ""); ?>">
-                                <a href="<?= BASE_URL ?>">Home</a>
-                            </li>
-                            <li class="<?= ($menuDinamic == "/rastreio" ? "active" : ""); ?>">
-                                <a href="<?= BASE_URL ?>rastreio">Rastrear</a>
-                            </li>
                         </ul>
                     </nav>
                 </div>

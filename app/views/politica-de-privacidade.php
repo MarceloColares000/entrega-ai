@@ -21,7 +21,7 @@
 			        <p>Suas informações podem ser compartilhadas com outros usuários para facilitar a prestação de serviços. Além disso, podemos compartilhar informações com terceiros para cumprir obrigações legais.</p>
 
 			        <h4>SEGURANÇA</h4>
-			        <p>Implementamos medidas de segurança para proteger suas informações pessoais. No entanto, nenhum método de transmissão ou armazenamento eletrônico é totalmente seguro, e não podemos garantir a segurança absoluta.</p>
+			        <p>Implementamos medidas de segurança para proteger suas informações pessoais. Conforme a Lei Geral de Proteção de Dados Pessoais (LGPD), Lei n° 13.709/2018.</p>
 
 			        <h4>ALTERAÇÕES A ESTA POLÍTICA</h4>
 			        <p>Reservamo-nos o direito de modificar esta Política de Privacidade a qualquer momento. A versão mais recente estará sempre disponível aqui.</p>
