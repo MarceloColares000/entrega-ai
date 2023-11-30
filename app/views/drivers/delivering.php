@@ -43,10 +43,10 @@
                                                                 <form action="<?= BASE_URL ?>/motorista/delivery/updateStatus" method="post">
                                                                     <select class="form-control mb-2" name="delivery_status_id" id="delivery_status_id" required>
                                                                         <option value="">Selecione</option>
-                                                                        <option value="3">Já estou a caminho</option>
-                                                                        <option value="5">Já peguei o pacote e estou a caminho</option>
-                                                                        <option value="7">Problemas na entrega</option>
-                                                                        <option value="11">Devolvi o pacote</option>
+                                                                        <option value="3" <?= $deliveries->getDelivery_Status_Id() == 3 ? "selected" : "" ?>>Já estou a caminho</option>
+                                                                        <option value="5" <?= $deliveries->getDelivery_Status_Id() == 5 ? "selected" : "" ?>>Já peguei o pacote e estou a caminho</option>
+                                                                        <option value="7" <?= $deliveries->getDelivery_Status_Id() == 7 ? "selected" : "" ?>>Problemas na entrega</option>
+                                                                        <option value="11" <?= $deliveries->getDelivery_Status_Id() == 11 ? "selected" : "" ?>>Devolvi o pacote</option>
                                                                     </select>
                                                                     <input type="hidden" name="id" id="id" value="<?= $deliveries->getId() ?>">
                                                                     <input type="hidden" name="delivery_id" id="delivery_id" value="<?= $delivery_id ?>">

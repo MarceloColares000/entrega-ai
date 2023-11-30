@@ -34,6 +34,7 @@ $dispatcher->addRoute('home', HomeController::class, 'renderHome');
 $dispatcher->addRoute('termos-de-uso', HomeController::class, 'renderTermos');
 $dispatcher->addRoute('politica-de-privacidade', HomeController::class, 'renderPolitica');
 $dispatcher->addRoute('contato', HomeController::class, 'renderContact');
+$dispatcher->addRoute('sobre', HomeController::class, 'renderAbout');
 
 //Rotas de usuário
 
@@ -57,6 +58,7 @@ foreach ($userRoutesGroup as $userRoute) {
     $dispatcher->addRoute($userRoute . '/servicos', ServiceController::class, 'renderService');
     $dispatcher->addRoute($userRoute . '/delivery/new', DeliveryController::class, 'newDelivery');
     $dispatcher->addRoute($userRoute . '/delivery/cancel', DeliveryController::class, 'cancelDelivery');
+    $dispatcher->addRoute($userRoute . '/delivery/changeDriver', DeliveryController::class, 'changeDriver');
     $dispatcher->addRoute($userRoute . '/historico', DeliveryController::class, 'renderHistoric');
     $dispatcher->addRoute($userRoute . '/rastrear', DeliveryController::class, 'trackingDelivery');
     $dispatcher->addRoute($userRoute . '/rastrear/delivery/{deliveryId}', DeliveryController::class, 'trackingDeliveryId');

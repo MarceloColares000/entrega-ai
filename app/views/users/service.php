@@ -91,6 +91,17 @@
                                                         <input class="form-control" required type="text" name="weight" id="weight">
                                                     </div>
                                                     <div class="form-group">
+                                                        <label for="vehicle_type_id">Selecione o tipo de veículo:</label>
+                                                        <select onchange="calculateCost()" id="vehicle_type_id" name="vehicle_type_id" class="form-select col-md-12" required>
+                                                            <option value="">Selecione</option>
+                                                            <?php foreach($vehicleTypes as $vehicleType){ ?>
+                                                            <option value="<?= $vehicleType->getId() ?>">
+                                                                <?= $vehicleType->getType_name() . " | R$ " . number_format($vehicleType->getBase_rate(), 2, ',','.') . " | R$ " . number_format($vehicleType->getRate_per_km(), 2, ',','.') . " / Km | Max:" . $vehicleType->getMax_weight() . "Kg" ?>
+                                                            </option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label for="distance">Distância por estrada:</label>
                                                         <span id="distance"></span>
                                                     </div>
@@ -103,31 +114,20 @@
                                                         R$ <span id="cost"></span>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="vehicle_type_id">Selecione o tipo de veículo:</label>
-                                                        <select onchange="calculateCost()" id="vehicle_type_id" name="vehicle_type_id" class="form-select col-md-12" required>
-                                                            <option value="">Selecione</option>
-                                                            <?php foreach($vehicleTypes as $vehicleType){ ?>
-                                                            <option value="<?= $vehicleType->getId() ?>">
-                                                                <?= $vehicleType->getType_name() . " | R$ " . number_format($vehicleType->getBase_rate(), 2, ',','.') . " | R$ " . number_format($vehicleType->getRate_per_km(), 2, ',','.') . " / Km | Max:" . $vehicleType->getMax_weight() . "Kg" ?>
-                                                            </option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
                                                         <label for="payments_type">Selecione o tipo de pagamento</label>
                                                         <select id="payments_type" name="payments_type" class="form-select col-md-12" required>
                                                             <option value="">Selecione</option>
                                                             <option value="4">Pagar com pix</option>
                                                             <?php foreach($cards as $card){ ?>
                                                             <option value="<?= $card->getId() ?>">
-                                                                <?= substr($card->getCard_number(), 0, strrpos($card->getCard_number(), '.' ) - 9 ).'**** ****'; ?>
+                                                                <?= substr($card->getCard_number(), 0, strrpos($card->getCard_number(), '.' ) - 9 ).'**** ****'; ?>, <?= $card->getExpiration_date() ?>
                                                             </option>
                                                             <?php } ?>
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="delivery_details">Detalhes:</label>
-                                                        <textarea class="form-control" required type="text" name="delivery_details" id="delivery_details"></textarea>
+                                                        <textarea class="form-control" type="text" name="delivery_details" id="delivery_details"></textarea>
                                                     </div>
                                                     <input type="hidden" name="user_id" id="user_id" value="<?= $_SESSION['user_id']; ?>">
                                                     <input type="hidden" name="sender_latitude" id="sender_latitude" value="">
@@ -161,6 +161,9 @@
                                                                             <p style="word-break: break-all;">00020126360014BR.GOV.BCB.PIX0114811520940001165204000053039865802BR5924Entrega ai Servicos LTDA6012Quixada - CE62120508ENTEGAAI63042ED4</p>
                                                                         </div>
                                                                         <button class="btn btn-primary btn-sm" id="copy"><i class="fa fa-clone" aria-hidden="true"></i> Copiar</button>
+                                                                        <button type="submit" class="site-btn site-btn-secondary mb-4 mt-4" id="solicitarButton">
+                                                                             <i class="fa fa-save"></i> Solicitar
+                                                                         </button>
                                                                     </div>
                                                                 </div>
                                                             </div>

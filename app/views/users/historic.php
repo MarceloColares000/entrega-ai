@@ -121,6 +121,13 @@
                                                                     <i class="fa fa-star" style="color: #ffcc00;"></i> <?= number_format($delivery->getAverage_rating(), 2) ?>
                                                                 <?php endif; ?>
                                                             </p>
+                                                            <?php if ($delivery->getDelivery_status_id() == 4 || $delivery->getDelivery_status_id() == 3) { ?>
+                                                            <p class="text-muted">Prefere outro motorista?</p>
+                                                            <form method="POST" action="<?= BASE_URL ?>usuario/delivery/changeDriver">
+                                                                <input type="hidden" name="delivery_id" id="delivery_id" value="<?= $delivery->getId() ?>">
+                                                                <button class="btn site-btn-secondary"><i class="fa fa-search"></i> Procurar outro motorista</button>
+                                                            </form>
+                                                        <?php } ?>
                                                         <?php else : ?>
                                                             <p class="text-muted">Nenhum motorista aceitou seu pedido</p>
                                                         <?php endif; ?>

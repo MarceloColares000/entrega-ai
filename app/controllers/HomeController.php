@@ -68,4 +68,16 @@ class HomeController
         View::render('contact', $data, 'default');
     }
 
+    public function renderAbout()
+    {
+
+        $title = "Sobre nós | Entrega aí ";
+        $data = [
+            'title' => $title,
+            'menuDinamic' => '/sobre',
+        ];
+
+        View::render('about', $data, 'default');
+    }
+
 }

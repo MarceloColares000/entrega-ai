@@ -66,7 +66,6 @@ class DeliveryController
             Helpers::redirect('usuario/servicos');
         }
 
-
         // Instância e atribuição dos atributos
         $delivery = new Delivery();
 
@@ -139,6 +138,46 @@ class DeliveryController
 
         } else {
             $_SESSION['msg'] = Message::error("Erro ao cancelar a entrega. Tente novamente!");
+            Helpers::redirect('usuario/historico');
+        }
+    
+    }
+
+    //Cancelar entrega
+    public function changeDriver()
+    {   
+        
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            Helpers::redirect('usuario/historico');
+        }
+
+        $id = isset($_POST['id']) ? (int)$_POST['id'] : null;
+        $user_id = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : null;
+
+        $delivery = new Delivery();
+        $delivery->setDriver_id(0);
+        $delivery->setVehicle_id(0);
+        $delivery->setDelivery_status_id(1);
+
+        $deliveryDAO = new deliveryDAO();
+
+        // Verifica se o delivery pertence ao usuario
+        $isUserdelivery = $deliveryDAO->getByConditions("user_id = $user_id AND id = $id");
+
+        if($isUserdelivery){
+
+            $updateddelivery = $deliveryDAO->update($delivery, "id = {$id}");
+
+            if ($updateddelivery) {
+                $_SESSION['msg'] = Message::success("Você não quis esse motorista, estamos procurando outro agora!");
+                Helpers::redirect('usuario/historico');
+            } else {
+                $_SESSION['msg'] = Message::error("Erro ao procurar outro motorista. Tente novamente!");
+                Helpers::redirect('usuario/historico');
+            }
+
+        } else {
+            $_SESSION['msg'] = Message::error("Erro ao procurar outro motorista. Tente novamente!");
             Helpers::redirect('usuario/historico');
         }
     
